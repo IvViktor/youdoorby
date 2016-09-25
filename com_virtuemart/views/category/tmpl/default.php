@@ -137,23 +137,7 @@ if (!empty($this->keyword)) {
 	<h3><?php echo $this->keyword; ?></h3>
 	<?php
 } ?>
- 		/*<?php if ($this->search !==null ) { ?>
-		    <form action="<?php echo JRoute::_('index.php?option=com_virtuemart&view=category&limitstart=0&virtuemart_category_id='.$this->category->virtuemart_category_id ); ?>" method="get">
-
-		    <!--BEGIN Search Box --><div class="virtuemart_search">
-		    <?php echo $this->searchcustom ?>
-		    <br />
-		    <?php echo $this->searchcustomvalues ?>
-		    <input name="keyword" class="inputbox" type="text" size="20" value="<?php echo $this->keyword ?>" />
-		    <input type="submit" value="<?php echo JText::_('COM_VIRTUEMART_SEARCH') ?>" class="button" onclick="this.form.keyword.focus();"/>
-		    </div>
-				    <input type="hidden" name="search" value="true" />
-				    <input type="hidden" name="view" value="category" />
-
-		    </form>
-		<!-- End Search Box -->
-		<?php } ?>*/
-
+ 	
 <?php // Show child categories
 if (!empty($this->products)) {
 ?>
