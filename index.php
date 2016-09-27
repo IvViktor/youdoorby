@@ -34,8 +34,11 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.j
   
   <style type="text/css">
     <? include "css/template2.css" ?>
-  </style>
+  </style>  
   
+  <style type="text/css">
+    <? include "css/template3.css" ?>
+  </style>
 
   <style type="text/css">
     <? include "libs/font-awesome-4.2.0/css/font-awesome.min.css" ?>
@@ -61,6 +64,8 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.j
     <? include "css/media.css" ?>
   </style>
 
+
+
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
@@ -69,7 +74,6 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.j
   <script type="text/javaScript" src="js/libs/fancybox/jquery.fancybox.pack.js"></script>
   <script type="text/javaScript" src="js/libs/owl-carousel/owl.carousel.min.js"></script>
   <script type="text/javaScript" src="js/libs/countdown/jquery.plugin.js"></script>
-  <scrip
 
   <jdoc:include type="head" />
 </head>
@@ -112,20 +116,25 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.j
             <jdoc:include type="modules" name="slider" />
             <div class="sliderm"><jdoc:include type="modules" name="sliderm" /></div> 
             <div class="showcase"><jdoc:include type="modules" name="showcase" /></div>
-            <jdoc:include type="modules" name="recommended" />
+           <div class="recommended"> <jdoc:include type="modules" name="recommended" /></div>
             <jdoc:include type="modules" name="last" />
             <jdoc:include type="modules" name="text" />
           </div>
+          </div>
+        </div>
+
+      </div>
 
           <div class="footer">
             <jdoc:include type="modules" name="post_component" />
-            <jdoc:include type="modules" name="gallery" />
+            <div class="gallery"><jdoc:include type="modules" name="gallery" /></div>
             <jdoc:include type="modules" name="footer" />
-
-          </div>
-        </div>
+            <jdoc:include type="modules" name="footer-back" />
       </div>
 
+	  
+	  
+ 
       <?php echo $tpl->partial('counters', array(
         'myVar' => 123
         ));?>

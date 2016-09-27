@@ -71,6 +71,7 @@
 		<position>text</position>
 		<position>gallery</position>
 		<position>footer</position>
+        <position>footer-back</position>
         <position>post_component</position>
     </positions>
 
