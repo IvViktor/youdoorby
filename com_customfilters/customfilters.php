@@ -37,6 +37,6 @@ require_once JPATH_COMPONENT.DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'
 require_once JPATH_COMPONENT.DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'search.php';
 
 $input=JFactory::getApplication()->input; 
-$controller = JControllerLegacy::getInstance('Customfilters');
+$controller = JController::getInstance('Customfilters');
 $controller->execute($input->get('task','display','cmd'));
 $controller->redirect();

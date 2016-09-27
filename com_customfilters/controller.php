@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 // Include dependancies
 jimport('joomla.application.component.controller');
 
-class CustomfiltersController extends JControllerLegacy{
+class CustomfiltersController extends JController{
 	protected $default_view='products';
 
 	function __construct($config = array()){

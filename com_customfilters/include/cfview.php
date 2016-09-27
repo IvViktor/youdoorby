@@ -29,7 +29,7 @@ jimport('joomla.application.component.view');
  * @author	Sakis Terz
  * @since	1.0
  */
-class cfView extends JViewLegacy{
+class cfView extends JView{
 
 	/**
 	 * Execute and display a template script.

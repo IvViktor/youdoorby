@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 // Include dependancies
 jimport('joomla.application.component.controller'); 
 
-class CustomfiltersControllerModule extends JControllerLegacy{
+class CustomfiltersControllerModule extends JController{
 
 
 }
