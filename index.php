@@ -107,6 +107,7 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.j
 			      <jdoc:include type="modules" name="nav" />
             <jdoc:include type="modules" name="search" />
             <jdoc:include type="modules" name="cart" />
+			<jdoc:include type="modules" name="filterpanel"/>
 		  </div>
 
           <div class="content">

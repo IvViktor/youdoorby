@@ -61,6 +61,7 @@
 		<position>nav</position>
 		<position>search</position>
 		<position>cart</position>
+		<position>filterpanel</position>
 		<position>breadcrumbs</position>
 		<position>sidebar</position>
 		<position>slider</position>
