@@ -6,13 +6,14 @@
  * @package		customfilters
  * @author		Sakis Terz
  * @link		http://breakdesigns.net
- * @copyright	Copyright (c) 2012-2016 breakdesigns.net. All rights reserved.
+ * @copyright	Copyright (c) 2008-2012 breakdesigns.net. All rights reserved.
  * @license		http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *				customfilters is free software. This version may have been modified
  *				pursuant to the GNU General Public License, and as distributed
  *				it includes or is derivative of works licensed under the GNU
  *				General Public License or other free or open source software
  *				licenses.
+ * @version $Id: cfview.php 1 2011-12-23 20:54:00Z sakis $
  */
 
 //defined
@@ -28,7 +29,7 @@ jimport('joomla.application.component.view');
  * @author	Sakis Terz
  * @since	1.0
  */
-class cfView extends JView{
+class cfView extends JViewLegacy{
 
 	/**
 	 * Execute and display a template script.
@@ -40,7 +41,7 @@ class cfView extends JView{
 	 * @see fetch()
 	 */
 	function display($tpl = null)
-	{
+	{	
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -87,7 +88,7 @@ class cfView extends JView{
 		//set the VM vars to the template path
 		$viewName=$this->getName();
 		$this->_path['template'] = str_replace('com_customfilters', 'com_virtuemart', $this->_path['template']);
-		$this->_path['template'] = str_replace(DIRECTORY_SEPARATOR.$viewName.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR.'category'.DIRECTORY_SEPARATOR, $this->_path['template']);
+		$this->_path['template'] = str_replace($viewName, 'category', $this->_path['template']);
 
 		// load the template script
 		jimport('joomla.filesystem.path');

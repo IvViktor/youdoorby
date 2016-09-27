@@ -6,7 +6,7 @@
  * @package		customfilters
  * @author		Sakis Terz
  * @link		http://breakdesigns.net
- * @copyright	Copyright (c) 2012-2016 breakdesigns.net. All rights reserved.
+ * @copyright	Copyright (c) 2010 - 2014 breakdesigns.net. All rights reserved.
  * @license		http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *				customfilters is free software. This version may have been modified
  *				pursuant to the GNU General Public License, and as distributed
@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 //import the view class
 jimport('joomla.application.component.view');
 
-class CustomfiltersViewModule extends JView{
+class CustomfiltersViewModule extends JViewLegacy{
 
 
 	public function display($tpl = null){

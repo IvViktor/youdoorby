@@ -6,13 +6,14 @@
  * @package		customfilters
  * @author		Sakis Terz
  * @link		http://breakdesigns.net
- * @copyright	Copyright (c) 2012-2016 breakdesigns.net. All rights reserved.
+ * @copyright	Copyright (c) 2010 - 2013 breakdesigns.net. All rights reserved.
  * @license		http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *				customfilters is free software. This version may have been modified
  *				pursuant to the GNU General Public License, and as distributed
  *				it includes or is derivative of works licensed under the GNU
  *				General Public License or other free or open source software
  *				licenses.
+ * @version $Id: view.html.php 2013-11-21 18:27:00Z sakis $
  */
 
 // No direct access
@@ -20,22 +21,16 @@ defined('_JEXEC') or die;
 
 require_once JPATH_COMPONENT.DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'cfview.php';
 
-class CustomfiltersViewProducts extends cfView
-{
+class CustomfiltersViewProducts extends cfView{
 	public $vm_version;
 
-    /**
-     * Display function of the view
-     * @see cfView::display()
-     */
-	public function display($tpl = null)
-	{
+
+	public function display($tpl = null){
+
 		$app=JFactory::getApplication();
-		$this->show_prices  = VmConfig::get('show_prices',1);
-
 		$this->addHelperPath(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers');
-		if (!class_exists('CurrencyDisplay'))require(JPATH_VM_SITE.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'shopfunctionsf.php');
-
+		require_once(JPATH_VM_SITE.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'shopfunctionsf.php'); //dont remove that file it is actually in every view
+		$this->show_prices  = VmConfig::get('show_prices',1);
 		if($this->show_prices == '1'){
 			if(!class_exists('calculationHelper')) require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'calculationh.php');
 		}
@@ -43,15 +38,10 @@ class CustomfiltersViewProducts extends cfView
 
 		$this->vm_version=VmConfig::getInstalledVersion();
 		$this->showproducts=true;
-
 		//get menu parameters
 		$this->menuParams=cftools::getMenuparams();
 		$vendorId = 1;
 		$jinput=$app->input;
-		$this->showcategory=false;
-		$this->showsearch=false;
-		$this->fallback=false;
-
 		$categories=$jinput->get('virtuemart_category_id',array(),'array');
 
 		/*If there is only one category selected and is not zero, display children categories*/
@@ -65,23 +55,48 @@ class CustomfiltersViewProducts extends cfView
 
 		$categoryModel = VmModel::getModel('category');
 		$category = $categoryModel->getCategory($this->categoryId);
-		$catImgAmount=VmConfig::get('catimg_browse',1)?VmConfig::get('catimg_browse',1):1;
-		$categoryModel->addImages($category, $catImgAmount);
+		$categoryModel->addImages($category,1);
 		$category->haschildren=$category_haschildren;
 
-		if($category_haschildren) {
-			$category->children = $categoryModel->getChildCategoryList( $vendorId, $this->categoryId, $categoryModel->getDefaultOrdering(), $categoryModel->_selectedOrderingDir );
+		//Virtuemart > 2.0.24a is using this method
+		if($category_haschildren){
+			if(version_compare($this->vm_version, '2.0.24a')>0){
+				$category->children = $categoryModel->getChildCategoryList( $vendorId, $this->categoryId, $categoryModel->getDefaultOrdering(), $categoryModel->_selectedOrderingDir );
+			}else{
+				$cache = JFactory::getCache('com_virtuemart','callback');
+				$category->children = $cache->call( array( 'VirtueMartModelCategory', 'getChildCategoryList' ),$vendorId, $this->categoryId );
+			}
 		}
 
-		$categoryModel->addImages($category->children, $catImgAmount);
+		$categoryModel->addImages($category->children,1);
 
-		//triggers a content plugn for that category
+
 		if (VmConfig::get('enable_content_plugin', 0)) {
+			//Virtuemart 2.0.24 and later
 			if(method_exists('shopFunctionsF','triggerContentPlugin'))shopFunctionsF::triggerContentPlugin($category, 'category','category_description');
+			//Virtuemart below 2.0.24
+			else{
+				$dispatcher = JDispatcher::getInstance();
+				JPluginHelper::importPlugin('content');
+				$category->text = $category->category_description;
+				if(!class_exists('JParameter')) require(JPATH_LIBRARIES.DIRECTORY_SEPARATOR.'joomla'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.'parameter.php');
+
+				$params = new JParameter('');
+				$results = $dispatcher->trigger('onContentPrepare', array('com_virtuemart.category', &$category, &$params, 0));
+				// More events for 3rd party content plugins
+				// This do not disturb actual plugins, because we don't modify $product->text
+				$res = $dispatcher->trigger('onContentAfterTitle', array('com_virtuemart.category', &$category, &$params, 0));
+				$category->event->afterDisplayTitle = trim(implode("\n", $res));
+
+				$res = $dispatcher->trigger('onContentBeforeDisplay', array('com_virtuemart.category', &$category, &$params, 0));
+				$category->event->beforeDisplayContent = trim(implode("\n", $res));
+
+				$res = $dispatcher->trigger('onContentAfterDisplay', array('com_virtuemart.category', &$category, &$params, 0));
+				$category->event->afterDisplayContent = trim(implode("\n", $res));
+				$category->category_description = $category->text;
+			}
 		}
-
 		$this->category=$category;
-
 		//load basic libraries before any other script
 		$template = VmConfig::get('vmtemplate','default');
 		if (is_dir(JPATH_THEMES.DIRECTORY_SEPARATOR.$template)) {
@@ -94,24 +109,24 @@ class CustomfiltersViewProducts extends cfView
 		 * show base price variables
 		 */
 		$user = JFactory::getUser();
+
 		$this->showBasePrice = ($user->authorise('core.admin','com_virtuemart') or $user->authorise('core.manage','com_virtuemart'));
+
 
 		/*
 		 * get the products from the cf model
 		 */
 		$productModel = VmModel::getModel('product');
-
 		//rating
 		$ratingModel = VmModel::getModel('ratings');
 		$this->showRating = $ratingModel->showRating();
-		$productModel->withRating = $this->showRating;
-
+		$productModel->withRating = $this->showRating;	
+		
 		$ids=$this->get('ProductListing');
-		$this->products=$productModel->getProducts($ids);
-
+		$this->products=$productModel->getProducts($ids);		
+		
 		$productModel->addImages($this->products);
 		$model=$this->getModel();
-
 		//add stock
 		foreach($this->products as $product){
 			$product->stock = $productModel->getStockIndicator($product);
@@ -156,21 +171,18 @@ class CustomfiltersViewProducts extends cfView
 		}
 		$productsLayout = VmConfig::get('productsublayout','products');
 		if(empty($productsLayout)) $productsLayout = 'products';
-		$this->productsLayout =$productsLayout;
+		$this->productsLayout =$productsLayout;	
+		
+		
 
-		//vm 3.0.17 and later saves the products in an assoc. array using as a key the product type
-		if(version_compare($this->vm_version, '3.0.17', 'ge')) {
-		    $products=$this->products;
-		    $this->products=[];
-            $this->products['0']=$products;
-		}
+		//Pagination
+		$u=JFactory::getURI();
+		$query=$u->getQuery();
 		$this->search=false;
 		$this->searchcustom = '';
 		$this->searchCustomValues = '';
 		$this->keyword='';
-
-		//my model's pagination
-		$this->vmPagination = $model->getPagination(true);
+		$this->vmPagination = $model->getPagination(true); //my model's pagination
 		$this->perRow=$this->menuParams->get('prod_per_row',3);
 		$this->orderByList = $this->get('OrderByList');
 
@@ -190,7 +202,7 @@ class CustomfiltersViewProducts extends cfView
 		$app=JFactory::getApplication();
 		$joomla_conf=JFactory::getConfig();
 		$this->setCanonical();
-
+		
 		/*
 		 * Add meta data
 		 */
@@ -204,10 +216,12 @@ class CustomfiltersViewProducts extends cfView
 			if (!empty($this->category->metarobot)) {
 				$document->setMetaData('robots', $this->category->metarobot);
 			}
+
 			if ($joomla_conf->get('MetaAuthor') == true && !empty($this->category->metaauthor)) {
 				$document->setMetaData('author',$this->category->metaauthor);
 			}
 		}
+
 
 		/*
 		 * Load scripts and styles
@@ -237,24 +251,23 @@ class CustomfiltersViewProducts extends cfView
 	function setCanonical(){
 		$document=JFactory::getDocument();
 		$inputs=CfInput::getInputs();
-
 		if(count($inputs)==1){
-			if(isset($inputs['virtuemart_category_id'])){
-				$currentlink='&virtuemart_category_id='.(int)reset($inputs['virtuemart_category_id']);
+			if(!empty($inputs['virtuemart_category_id'])){
+				$currentlink='&virtuemart_category_id='.(int)$inputs['virtuemart_category_id'][0];
 			}
 			else if(!empty($inputs['virtuemart_manufacturer_id'])){
-				$currentlink='&virtuemart_manufacturer_id='.(int)reset($inputs['virtuemart_manufacturer_id']);
+				$currentlink='&virtuemart_manufacturer_id='.(int)$inputs['virtuemart_manufacturer_id'][0];
 			}
 		}
 
-		if(!empty($currentlink)){
+		if(!empty($currentlink)){ 
 			$canonical_url=JRoute::_('index.php?option=com_virtuemart&view=category'.$currentlink);
-
+			
 			$links= $document->_links;
 			foreach($links as $key=>$link){
 				if(is_array($link)){
 					if(array_key_exists('relation', $link) && !empty($link['relation']) && $link['relation']=='canonical'){
-						//found it - delete the old
+						//found it - delete the old						
 						unset($document->_links[$key]);
 					}
 				}
