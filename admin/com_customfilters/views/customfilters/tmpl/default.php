@@ -35,21 +35,6 @@ $published_opt=array(array('value'=>1 ,'text' => JText::_('Published')),array('v
 $boolean_options=array(JHTML::_('select.option',1,JText::_('JYES')),JHTML::_('select.option',0,JText::_('JNO')));
 ?>
 
-<?php if (version_compare(JVERSION, '2.5.19', 'lt')): ?>
-<div class="alert alert-info">
-<?php echo JText::_('COM_CUSTOMFILTERS_UPDATE_JOOMLA_VERSION'); ?>
-</div>
-<?php endif; ?>
-<?php if($this->needsdlid): ?>
-<div class="alert">
-<?php echo JText::sprintf('COM_CUSTOMFILTERS_NEEDS_DLD','http://breakdesigns.net/custom-filters-manual-pro/49-using-the-live-update-49'); ?>
-</div>
-<?php endif; ?>
-<?php if (version_compare(JVERSION, '2.5.999', 'lt') && !$this->update_plugin): ?>
-<div class="alert alert-danger">
-<?php echo JText::_('COM_CUSTOMFILTERS_ERR_NOPLUGINNOUPDATES'); ?>
-</div>
-<?php endif; ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_customfilters&view=customfilters'); ?>"
 	method="post" name="adminForm" id="adminForm">
