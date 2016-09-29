@@ -47,7 +47,7 @@ JHtml::_('behavior.modal');
 jimport('joomla.application.component.controller');
 $input=JFactory::getApplication()->input;
 
-$controller = JControllerLegacy::getInstance('customfilters');
+$controller = JController::getInstance('customfilters');
 //$controller->execute(JRequest::getCmd('task'));
 $controller->execute($input->get('task','display','cmd'));
 $controller->redirect();

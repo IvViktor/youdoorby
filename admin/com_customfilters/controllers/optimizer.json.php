@@ -28,7 +28,7 @@ jimport('joomla.application.component.controller');
  * @author		Sakis Terz
  * @since		1.0
  */
-class CustomfiltersControllerOptimizer extends JControllerLegacy{
+class CustomfiltersControllerOptimizer extends JController{
 
 
 

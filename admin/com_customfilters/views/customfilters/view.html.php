@@ -28,7 +28,7 @@ jimport('joomla.application.component.view');
  * @author	Sakis Terz
  * @since	1.0
  */
-class CustomfiltersViewCustomfilters extends JViewLegacy{
+class CustomfiltersViewCustomfilters extends JView{
 	protected $items;
 	protected $pagination;
 	protected $state;

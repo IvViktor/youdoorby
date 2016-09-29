@@ -28,7 +28,7 @@ jimport('joomla.application.component.controller');
  * @author		Sakis Terz
  * @since		1.0
  */
-class CustomfiltersController extends JControllerLegacy{
+class CustomfiltersController extends JController{
 	
 	/**
 	 * Method to display a view.

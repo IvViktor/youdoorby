@@ -28,7 +28,7 @@ jimport('joomla.application.component.view');
  * @author	Sakis Terz
  * @since	1.0
  */
-class CustomfiltersViewOptimizer extends JViewLegacy{
+class CustomfiltersViewOptimizer extends JView{
 
 	/**
 	 *Display the view
