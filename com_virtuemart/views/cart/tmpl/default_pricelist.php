@@ -83,6 +83,9 @@
 		<?php
 			$i = 1 ? 2 : 1;
 		} ?>
+
+
+
 		<!--Begin of SubTotal, Tax, Shipment, Coupon Discount and Total listing -->
                   <?php if ( VmConfig::get('show_tax')) { $colspan=3; } else { $colspan=2; } ?>
 		<tr>
@@ -93,10 +96,7 @@
 		  <tr class="sectiontableentry1">
 			<td colspan="3" align="right"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_PRICES_TOTAL'); ?></td>
 
-                        <?php if ( VmConfig::get('show_tax')) { ?>
-			<td align="right"><?php echo "<span  class='priceColor2'>".$this->cart->prices['taxAmount']."</span>" ?></td>
-                        <?php } ?>
-			<td align="right"><?php echo "<span  class='priceColor2'>".$this->cart->prices['discountAmount']."</span>" ?></td>
+		<td align="right"><?php echo "<span  class='priceColor2'>".$this->cart->prices['discountAmount']."</span>" ?></td>
 			<td align="right"><?php echo $this->cart->prices['salesPrice'] ?></td>
 		  </tr>
 
@@ -119,17 +119,7 @@
 
 				</td>
 
-					 <?php if ( VmConfig::get('show_tax')) { ?>
-					<td align="right"><?php echo $this->cart->prices['couponTax']; ?> </td>
-					 <?php } ?>
-					<td align="right">&nbsp;</td>
-					<td align="right"><?php echo $this->cart->prices['salesPriceCoupon']; ?> </td>
-				<?php } else { ?>
-					<td colspan="6" align="left">&nbsp;</td>
-				<?php }
-
-				?>
-			</tr>
+				</tr>
 		<?php } ?>
 
 
