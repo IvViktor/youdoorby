@@ -59,13 +59,7 @@
 						 href="<?php echo JRoute::_('index.php?option=com_virtuemart&view=cart&task=delete&cart_virtuemart_product_id='.$prow->cart_item_id  ) ?>">
 					Delete
 					</a>
-				<?php
-					if (VmConfig::get('checkout_show_origprice',1) && !empty($this->cart->pricesUnformatted[$pkey]['basePriceWithTax']) && $prow->basePriceWithTax != $prow->salesPrice ) {
-						echo '<span class="line-through">'.$prow->basePriceWithTax .'</span><br />' ;
-					}
-					echo $prow->salesPrice ;
-					?>
-				</td>
+			</td>
 				<td align="right" ><form action="index.php" method="post" class="inline">
 				<input type="hidden" name="option" value="com_virtuemart" />
 				<input type="text" class="inputbox" size="2" maxlength="4" name="quantity" value="<?php echo $prow->quantity ?>" />
@@ -77,10 +71,16 @@
 				  </form>
 			  	</td>
 
-				<?php if ( VmConfig::get('show_tax')) { ?>
-				<td align="right"><?php echo "<span  class='priceColor2'>".$prow->subtotal_tax_amount."</span>" ?></td>
-                                <?php } ?>
-				<td align="right"><?php echo "<span  class='priceColor2'>".$prow->subtotal_discount."</span>" ?></td>
+				<td align="right">
+					<?php
+					if (VmConfig::get('checkout_show_origprice',1) && !empty($this->cart->pricesUnformatted[$pkey]['basePriceWithTax']) && $prow->basePriceWithTax != $prow->salesPrice ) {
+						echo '<span class="line-through">'.$prow->basePriceWithTax .'</span><br />' ;
+					}
+					echo $prow->salesPrice ;
+					?>
+					<br />
+					<?php echo "<span  class='priceColor2'>".$prow->subtotal_discount."</span>" ?>
+				</td>
 				<td colspan="1" align="right"><?php echo $prow->subtotal_with_tax ?></td>
 			</tr>
 		<?php
