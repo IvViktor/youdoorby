@@ -50,7 +50,9 @@
 
 				</td>
 				<td align="center">
+					<span>
 					<?php echo JHTML::link($prow->url, $prow->product_name).$prow->customfields; ?>
+					</span>
 				</td>
 				<td align="center" >
 				<?php
@@ -62,11 +64,12 @@
 				</td>
 				<td align="right" ><form action="index.php" method="post" class="inline">
 				<input type="hidden" name="option" value="com_virtuemart" />
-				<input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="inputbox" size="3" maxlength="4" name="quantity" value="<?php echo $prow->quantity ?>" />
+				<input type="text" class="inputbox" size="2" maxlength="4" name="quantity" value="<?php echo $prow->quantity ?>" />
 				<input type="hidden" name="view" value="cart" />
 				<input type="hidden" name="task" value="update" />
 				<input type="hidden" name="cart_virtuemart_product_id" value="<?php echo $prow->cart_item_id  ?>" />
-				<input type="submit" class="vmicon vm2-add_quantity_cart" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" align="middle" value=" "/>
+				<input type="button" name="addnumber" value="+" onclick='addOneToValue(this)'/>
+				<input type="button" name="decnumber" value="-" onclick='decOneFromValue(this)'/>
 			  </form>
 					<a class="vmicon vm2-remove_from_cart" title="<?php echo JText::_('COM_VIRTUEMART_CART_DELETE') ?>" align="middle" href="<?php echo JRoute::_('index.php?option=com_virtuemart&view=cart&task=delete&cart_virtuemart_product_id='.$prow->cart_item_id  ) ?>"> </a>
 				</td>
@@ -323,4 +326,20 @@
 
 	<div class="clear"></div>
 </div>
+<script>
+	function addOneToValue(element){
+		let formElement = element.parentElement;
+		let inputBox = formElement.getElementsByClassName('inputbox')[0];
+		let value = +inputBox.value;
+		inputBox.value = ++value;
+		formElement.submit();
+	}
+	function decOneFromValue(element){
+		let formElement = element.parentElement;
+		let inputBox = formElement.getElementsByClassName('inputbox')[0];
+		let value = +inputBox.value;
+		inputBox.value = --value;
+		formElement.submit();
+	}
 
+</script>
