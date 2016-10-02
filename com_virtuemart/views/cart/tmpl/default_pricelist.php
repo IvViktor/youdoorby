@@ -78,10 +78,7 @@
 					}
 					echo $prow->salesPrice ;
 					?>
-					<br />
-					<?php echo "<span  class='priceColor2'>".$prow->subtotal_discount."</span>" ?>
 				</td>
-				<td colspan="1" align="right"><?php echo $prow->subtotal_with_tax ?></td>
 			</tr>
 		<?php
 			$i = 1 ? 2 : 1;
