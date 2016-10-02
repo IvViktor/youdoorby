@@ -1,0 +1,8 @@
+<div class="totalprices">
+		<div>Сумма заказа: <?php echo $this->cart->prices['salesPrice'] ?></div>
+		<div>Суммарная скидка: <?php echo $this->cart->prices['discountAmount'] ?></div>
+		<div>Доставка: <?php echo $this->cart->prices['salesPriceShipment']; ?> </div>
+</div>
+<div class="total">
+		<div>К оплате: <strong><?php echo $this->cart->prices['billTotal'] ?></strong></div>
+</div>
