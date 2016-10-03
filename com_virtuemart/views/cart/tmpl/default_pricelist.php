@@ -326,6 +326,30 @@
 
 	<div class="clear"></div>
 </div>
+<form method="post" id="userForm" name="chooseShipmentRate" action="<?php echo JRoute::_('index.php'); ?>" class="form-validate">
+<?php
+
+	echo "<h1>".JText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT')."</h1>";
+
+
+	   echo "<fieldset>\n";
+	// if only one Shipment , should be checked by default
+	    foreach ($this->shipments_shipment_rates as $shipment_shipment_rates) {
+		if (is_array($shipment_shipment_rates)) {
+		    foreach ($shipment_shipment_rates as $shipment_shipment_rate) {
+			echo $shipment_shipment_rate."<br />\n";
+		    }
+		}
+	    }
+	    echo "</fieldset>\n";
+
+    ?>
+
+    <input type="hidden" name="option" value="com_virtuemart" />
+    <input type="hidden" name="view" value="cart" />
+    <input type="hidden" name="task" value="setshipment" />
+    <input type="hidden" name="controller" value="cart" />
+</form>
 <script>
 	function addOneToValue(element){
 		let formElement = element.parentElement;
