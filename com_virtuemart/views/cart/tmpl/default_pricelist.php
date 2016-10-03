@@ -259,37 +259,6 @@
 <div class="billto-shipto">
 	<div class="width50 floatleft">
 
-		<span><span class="vmicon vm2-billto-icon"></span>
-		<?php echo JText::_('COM_VIRTUEMART_USER_FORM_BILLTO_LBL'); ?></span>
-		<?php // Output Bill To Address ?>
-		<div class="output-billto">
-		<?php
-
-		foreach($this->cart->BTaddress['fields'] as $item){
-			if(!empty($item['value'])){
-				if($item['name']==='agreed'){
-					$item['value'] =  ($item['value']===0) ? JText::_('COM_VIRTUEMART_USER_FORM_BILLTO_TOS_NO'):JText::_('COM_VIRTUEMART_USER_FORM_BILLTO_TOS_YES');
-				}
-				?><!-- span class="titles"><?php echo $item['title'] ?></span -->
-					<span class="values vm2<?php echo '-'.$item['name'] ?>" ><?php echo $this->escape($item['value']) ?></span>
-				<?php if ($item['name'] != 'title' and $item['name'] != 'first_name' and $item['name'] != 'middle_name' and $item['name'] != 'zip') { ?>
-					<br class="clear" />
-				<?php
-				}
-			}
-		} ?>
-		<div class="clear"></div>
-		</div>
-
-		<a class="details" href="<?php echo JRoute::_('index.php?option=com_virtuemart&view=user&task=editaddresscart&addrtype=BT',$this->useXHTML,$this->useSSL) ?>">
-		<?php echo JText::_('COM_VIRTUEMART_USER_FORM_EDIT_BILLTO_LBL'); ?>
-		</a>
-
-		<input type="hidden" name="billto" value="<?php echo $this->cart->lists['billTo']; ?>"/>
-	</div>
-
-	<div class="width50 floatleft">
-
 		<span><span class="vmicon vm2-shipto-icon"></span>
 		<?php echo JText::_('COM_VIRTUEMART_USER_FORM_SHIPTO_LBL'); ?></span>
 		<?php // Output Bill To Address ?>
