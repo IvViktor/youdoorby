@@ -350,6 +350,34 @@
     <input type="hidden" name="task" value="setshipment" />
     <input type="hidden" name="controller" value="cart" />
 </form>
+<form method="post" id="paymentForm" name="choosePaymentRate" action="<?php echo JRoute::_('index.php'); ?>" class="form-validate">
+<?php
+	echo "<h1>".JText::_('COM_VIRTUEMART_CART_SELECT_PAYMENT')."</h1>";
+     if ($this->found_payment_method) {
+
+
+    echo "<fieldset>";
+		foreach ($this->paymentplugins_payments as $paymentplugin_payments) {
+		    if (is_array($paymentplugin_payments)) {
+			foreach ($paymentplugin_payments as $paymentplugin_payment) {
+			    echo $paymentplugin_payment.'<br />';
+			}
+		    }
+		}
+    echo "</fieldset>";
+
+    } else {
+	 echo "<h1>".$this->payment_not_found_text."</h1>";
+    }
+
+
+    ?>
+
+    <input type="hidden" name="option" value="com_virtuemart" />
+    <input type="hidden" name="view" value="cart" />
+    <input type="hidden" name="task" value="setpayment" />
+    <input type="hidden" name="controller" value="cart" />
+</form>
 <script>
 	function addOneToValue(element){
 		let formElement = element.parentElement;
