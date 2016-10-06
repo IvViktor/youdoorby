@@ -24,13 +24,14 @@ defined('_JEXEC') or die('Restricted access');
 // Load the view framework
 if(!class_exists('VmView'))require(JPATH_VM_SITE.DS.'helpers'.DS.'vmview.php');
 
+require(JPATH_VM_SITE.DS.'views'.DS.'user'.DS.'view.html.php');
 /**
  * View for the shopping cart
  * @package VirtueMart
  * @author Max Milbers
  * @author Patrick Kohl
  */
-class VirtueMartViewCart extends VmView {
+class VirtueMartViewCart extends VirtuemartViewUser{
 
 	public function display($tpl = null) {
 		$mainframe = JFactory::getApplication();

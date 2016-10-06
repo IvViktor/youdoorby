@@ -350,7 +350,6 @@
 <form method="post" id="adminForm" name="userForm" action="<?php echo JRoute::_('index.php?view=user',$this->useXHTML,$this->useSSL) ?>" class="form-validate">
 
 <?php 
-		echo 'userfields';
 $typefields = array('corefield', 'billto');
 $corefields = VirtueMartModelUserfields::getCoreFields();
 foreach ($typefields as $typefield) {
@@ -391,8 +390,8 @@ foreach ($typefields as $typefield) {
 
 
 
-	if (($typefield == 'corefield' && (in_array($_field['name'], $corefields) && $_field['name'] != 'email' && $_field['name'] != 'agreed') )
-		or ($typefield == 'billto' && !(in_array($_field['name'], $corefields) && $_field['name'] != 'email' && $_field['name'] != 'agreed') )) {
+	//if (($typefield == 'corefield' && (in_array($_field['name'], $corefields) && $_field['name'] != 'email' && $_field['name'] != 'agreed') )
+		if ($typefield == 'billto' && !(in_array($_field['name'], $corefields) && $_field['name'] != 'email' && $_field['name'] != 'agreed') ) {
 	    if (!$_table) {
 		// A table hasn't been opened as well. We need one here,
 		if ( $typefield == 'corefield') {
