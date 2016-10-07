@@ -104,20 +104,20 @@ class VirtueMartViewCart extends VirtuemartViewUser{
 				$cart->checkout(false);
 			}
 
-			if ($cart->getDataValidated()) {
+			//if ($cart->getDataValidated()) {
 				$pathway->addItem(JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU'));
 				$document->setTitle(JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU'));
 				$text = JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU');
 				$checkout_task = 'confirm';
-			} else {
+			/*} else {
 				$pathway->addItem(JText::_('COM_VIRTUEMART_CART_OVERVIEW'));
 				$document->setTitle(JText::_('COM_VIRTUEMART_CART_OVERVIEW'));
 				$text = JText::_('COM_VIRTUEMART_CHECKOUT_TITLE');
 				$checkout_task = 'checkout';
-			}
+			}*/
 			$this->assignRef('checkout_task', $checkout_task);
-			$this->checkPaymentMethodsConfigured();
-			$this->checkShipmentMethodsConfigured();
+			//$this->checkPaymentMethodsConfigured();
+			//$this->checkShipmentMethodsConfigured();
 			if ($cart->virtuemart_shipmentmethod_id) {
 				$this->assignRef('select_shipment_text', JText::_('COM_VIRTUEMART_CART_CHANGE_SHIPPING'));
 			} else {

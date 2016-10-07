@@ -256,45 +256,6 @@
 
 	</table>
 </fieldset>
-<div class="billto-shipto">
-	<div class="width50 floatleft">
-
-		<span><span class="vmicon vm2-shipto-icon"></span>
-		<?php echo JText::_('COM_VIRTUEMART_USER_FORM_SHIPTO_LBL'); ?></span>
-		<?php // Output Bill To Address ?>
-		<div class="output-shipto">
-		<?php
-		if(empty($this->cart->STaddress['fields'])){
-			echo JText::sprintf('COM_VIRTUEMART_USER_FORM_EDIT_BILLTO_EXPLAIN',JText::_('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL') );
-		} else {
-			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
-			echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT'). VmHtml::checkbox('STsameAsBT',$this->cart->STsameAsBT).'<br />';
-			foreach($this->cart->STaddress['fields'] as $item){
-				if(!empty($item['value'])){ ?>
-					<!-- <span class="titles"><?php echo $item['title'] ?></span> -->
-					<?php
-					if ($item['name'] == 'first_name' || $item['name'] == 'middle_name' || $item['name'] == 'zip') { ?>
-						<span class="values<?php echo '-'.$item['name'] ?>" ><?php echo $this->escape($item['value']) ?></span>
-					<?php } else { ?>
-						<span class="values" ><?php echo $this->escape($item['value']) ?></span>
-						<br class="clear" />
-					<?php
-					}
-				}
-			}
-		}
- 		?>
-		<div class="clear"></div>
-		</div>
-		<?php if(!isset($this->cart->lists['current_id'])) $this->cart->lists['current_id'] = 0; ?>
-		<a class="details" href="<?php echo JRoute::_('index.php?option=com_virtuemart&view=user&task=editaddresscart&addrtype=ST&cid[]='.$this->cart->lists['current_id'],$this->useXHTML,$this->useSSL) ?>">
-		<?php echo JText::_('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL'); ?>
-		</a>
-
-	</div>
-
-	<div class="clear"></div>
-</div>
 <form method="post" id="userForm" name="chooseShipmentRate" action="<?php echo JRoute::_('index.php'); ?>" class="form-validate">
 <?php
 
@@ -397,7 +358,7 @@ foreach ($typefields as $typefield) {
 		if ( $typefield == 'corefield') {
 		    echo '<span class="userfields_info">' . $this->corefield_title . '</span>';
 		} else {
-		    echo '<span class="userfields_info">' . $this->vmfield_title . '</span>';
+			//echo '<span class="userfields_info">' . $this->vmfield_title . '</span>';
 		}
 		echo '	<table class="adminform user-details">' . "\n";
 		$_table = true;
@@ -405,7 +366,7 @@ foreach ($typefields as $typefield) {
 	    echo '		<tr>' . "\n";
 	    echo '			<td class="key">' . "\n";
 	    echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-	    echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
+	    echo '					' . $_field['title'] . ($_field['required'] ? '' : '') . "\n";
 	    echo '				</label>' . "\n";
 	    echo '			</td>' . "\n";
 	    echo '			<td>' . "\n";
@@ -431,9 +392,6 @@ foreach ($typefields as $typefield) {
 echo $_hiddenFields;
 ?>
 
-
-<?php echo "shipTo fields";
- echo $this->lists['shipTo']; ?>
 
 <input type="hidden" name="option" value="com_virtuemart" />
 <input type="hidden" name="controller" value="user" />

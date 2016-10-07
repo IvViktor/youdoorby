@@ -97,52 +97,19 @@ $document->addStyleDeclaration('#facebox .content {display: block !important; he
 	// This displays the pricelist MUST be done with tables, because it is also used for the emails
 	echo $this->loadTemplate('pricelist');
 	if ($this->checkout_task) $taskRoute = '&task='.$this->checkout_task;
-	else $taskRoute ='';
+	//else $taskRoute ='';
 	?>
 
 	<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_( 'index.php?option=com_virtuemart&view=cart'.$taskRoute,$this->useXHTML,$this->useSSL ); ?>">
-
-		<?php // Leave A Comment Field ?>
-		<div class="customer-comment marginbottom15">
-			<span class="comment"><?php echo JText::_('COM_VIRTUEMART_COMMENT'); ?></span><br />
-			<textarea class="customer-comment" name="customer_comment" cols="50" rows="4"><?php echo $this->cart->customer_comment; ?></textarea>
-		</div>
-		<?php // Leave A Comment Field END ?>
-
-
-
-		<?php // Continue and Checkout Button ?>
-		<div class="checkout-button-top">
-
-			<?php // Terms Of Service Checkbox
-			if (!class_exists('VirtueMartModelUserfields')){
-				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
-			}
-			$userFieldsModel = VmModel::getModel('userfields');
-			if($userFieldsModel->getIfRequired('agreed')){
-			    ?>
-			    <label for ="tosAccepted">
-			    <?php
-				if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
-				echo VmHtml::checkbox('tosAccepted',$this->cart->tosAccepted,1,0,'class="terms-of-service"');
-
-		if(VmConfig::get('oncheckout_show_legal_info',1)){
-		?>
-		<div class="terms-of-service">
-			<span class="terms-of-service" rel="facebox"><span class="vmicon vm2-termsofservice-icon"></span><?php echo JText::_('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED'); ?><span class="vm2-modallink"></span></span>
-			<div id="full-tos">
-				<h2><?php echo JText::_('COM_VIRTUEMART_CART_TOS'); ?></h2>
-				<?php echo $this->cart->vendor->vendor_terms_of_service;?>
-
-			</div>
-		</div>
-		<?php
-		} // VmConfig::get('oncheckout_show_legal_info',1)
-				//echo '<span class="tos">'. JText::_('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED').'</span>';
-				?>
-			    </label>
+<div class="totalprices">
+		<div>Сумма заказа: <?php echo $this->cart->prices['salesPrice'] ?></div>
+		<div>Суммарная скидка: <?php echo $this->cart->prices['discountAmount'] ?></div>
+		<div>Доставка: <?php echo $this->cart->prices['salesPriceShipment']; ?> </div>
+</div>
+<div class="total">
+		<div>К оплате: <strong><?php echo $this->cart->prices['billTotal'] ?></strong></div>
+</div>
 		    <?php
-			}
 
 			echo $this->checkout_link_html;
 			$text = JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU');
