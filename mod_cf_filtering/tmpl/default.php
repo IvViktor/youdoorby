@@ -71,11 +71,14 @@ if(count($filters_html_array)>0){
 			if($expanded_state[$key]==1)$state='show';
 			else $state='hide';
 		}else $state='show';
-		$state='hide';
 	   ?>
         <?php 
         /*Header*/
         ?>
+		<div class="cf_flt_header" id="cfhead_<?php echo $key?>" role="tab">
+			<div class="headexpand headexpand_<?php echo $state?>"	id="headexpand_<?php echo $key?>"></div>
+				<span class="cf_flt_header_text"><?php echo $filter_headers_array[$key]?></span>
+		</div>		
 		
 		<?php		
 		//add a script for the toggle			
