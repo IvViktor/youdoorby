@@ -57,7 +57,7 @@ class VirtuemartViewCategory extends VmView {
 		$productModel = VmModel::getModel('product');
 
 
-		$categoryId = JRequest::getInt('virtuemart_category_id', false);
+		$categoryId = JRequest::getInt('virtuemart_category_id', 1);
 		$vendorId = 1;
 
 		$category = $categoryModel->getCategory($categoryId);
@@ -134,7 +134,9 @@ class VirtuemartViewCategory extends VmView {
 		$this->assignRef('search', $search);
 
 	    // Load the products in the given category
+		echo "categoryId ->".$categoryId;
 	    $products = $productModel->getProductsInCategory($categoryId);
+		echo 'products ->'.count($products);
 	    $productModel->addImages($products,1);
 	    $this->assignRef('products', $products);
 
