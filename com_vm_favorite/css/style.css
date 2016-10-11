@@ -1,0 +1,57 @@
+.row .product .PricesalesPrice{
+	float: left;
+	font-weight: bold;
+	color: #06c;
+	margin: 5px 0;
+	}
+.row .product .PricebasePrice{
+	float: right;
+	text-decoration: line-through;
+	margin: 5px 0;
+	}
+.row .product a{
+	text-align: left;
+	display: inline-table;
+	color: #3d3d3d;
+	text-decoration: none;
+	font-size: 12px;
+	height: 45px;
+	margin: 5px 0;
+	}
+.row .product a:hover{color: #06c; text-decoration: underline;}
+.vmgroup img{max-width: 144px; padding: 1px;}
+.vmgroup a:hover img{border: 1px solid #d9d9d9; padding: 0px;}
+.product .manufacturer{font-weight: bold;}
+.row .product{
+	width: 174px;
+	padding: 1px;
+	text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	behavior: url(border-radius.htc);
+	display: inline-block;
+	_overflow:hidden;
+	*display:inline;
+	*zoom:1;
+	}
+.row .product:hover{
+	padding: 0px;
+	border: 1px solid #d9d9d9;
+	}
+.browse-view .row .product .spacer {
+	padding: 5px;
+	width: auto !important;
+}
+.row .product .bp input[type="submit"] {
+	visibility: hidden;
+	}
+.row .product:hover .bp input[type="submit"] {
+	visibility: visible;
+	}
+.row .product .bp a {
+	top: 50px;
+	position: relative;
+	height: 0px;
+	}

@@ -1,0 +1,26 @@
+.favorite_button {
+	background: url(../images/heart-active.png) no-repeat !important;
+	padding: 0 !important;
+	border: none !important;
+	width: 12px !important;
+	height: 14px !important;
+	cursor: pointer !important;
+	opacity: 0.7 !important;
+	float: right !important;
+	}
+.favorite_button:hover {
+	opacity: 1 !important;
+	}
+.deleted {
+	background: url(../images/heart.png) no-repeat !important;
+	padding: 0 !important;
+	border: none !important;
+	width: 12px !important;
+	height: 14px !important;
+	cursor: pointer !important;
+	opacity: 0.7 !important;
+	float: right !important;
+	}
+.deleted:hover {
+	opacity: 1 !important;
+	}
