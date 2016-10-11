@@ -14,7 +14,7 @@ jimport('joomla.application.component.controller'); // Подключаем би
 JLog::addLogger(array('text_file' => 'com_vm_favorite.php'), JLog::ALL, array('com_vm_favorite')); // Подключаем логирование.
 JError::$legacy = false; // Устанавливаем обработку ошибок в режим использования Exception.
 
-$controller = JControllerLegacy::getInstance('vm_favorite'); // Получаем экземпляр контроллера с префиксом vm_favorite.
+$controller = JController::getInstance('vm_favorite'); // Получаем экземпляр контроллера с префиксом vm_favorite.
 
 // Исполняем задачу task из Запроса.
 $input = JFactory::getApplication()->input;

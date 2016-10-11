@@ -11,7 +11,7 @@
 */
 defined('_JEXEC') or die('Restricted access'); // Запрет прямого доступа!
 jimport('joomla.application.component.controller'); // Подключаем библиотеку контроллера Joomla.
-$controller = JControllerLegacy::getInstance('vm_favorite'); // Получаем экземпляр контроллера с префиксом vm_favorite.
+$controller = JController::getInstance('vm_favorite'); // Получаем экземпляр контроллера с префиксом vm_favorite.
 
 class vm_favoriteModelvm_favorite extends JModel {
 	public function getTitle() {

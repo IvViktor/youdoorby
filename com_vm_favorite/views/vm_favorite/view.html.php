@@ -12,7 +12,7 @@
 defined('_JEXEC') or die('Restricted access'); // Запрет прямого доступа!
 jimport('joomla.application.component.view'); // Подключаем библиотеку представления Joomla.
 
-class vm_favoriteViewvm_favorite extends JViewLegacy {
+class vm_favoriteViewvm_favorite extends JView {
 	protected $title;
 	public function display($tpl = null) {
 		$this->title = $this->get('Title'); // Получаем сообщение.

@@ -32,6 +32,8 @@ if(!class_exists('VmView'))require(JPATH_VM_SITE.DS.'helpers'.DS.'vmview.php');
 */
 class VirtuemartViewCategory extends VmView {
 
+//$show_addtocart = 	(bool)$params->get( 'show_addtocart', 1 ); // Display the "Add-to-Cart" Link?
+
 	public function display($tpl = null) {
 
 

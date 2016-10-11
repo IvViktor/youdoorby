@@ -12,6 +12,6 @@
 defined('_JEXEC') or die; // Запрет прямого доступа!
 jimport('joomla.application.component.controller'); // Подключаем библиотеку контроллера Joomla.
 
-class vm_favoriteController extends JControllerLegacy
+class vm_favoriteController extends JController
 {
 }
