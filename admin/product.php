@@ -83,6 +83,21 @@ class VirtueMartModelProduct extends VmModel {
 	var $filter_order 					= 'p.virtuemart_product_id';
 	var $filter_order_Dir 				= 'DESC';
 
+function untreeCat($vm_catid, &$ccont){ 
+		$dbx = JFactory::getDBO(); 
+		$q = 'SELECT `category_child_id` FROM `#__virtuemart_category_categories` WHERE `category_parent_id`="'.$vm_catid.'"';
+		$dbx->setQuery($q);
+		 $dby = $dbx->query();
+		 if ($dby->num_rows > 0) {
+				//return;
+		//} else {
+				while($tt = $dby->fetch_row()) { 
+						array_push($ccont, $tt[0]); 
+						$kat = $tt[0];
+						$this->untreeCat($kat, $ccont);
+				} 
+		} 
+}
 	/**
 	 * This function resets the variables holding request depended data to the initial values
 	 *
@@ -243,12 +258,22 @@ class VirtueMartModelProduct extends VmModel {
 			$where[] = ' p.`product_in_stock`>"0" ';
 		}
 
-
+//функция добавляет ID всех подкатегорий к запросу
 		if ($virtuemart_category_id>0){
-			$joinCategory = true ;
-			$where[] = ' `#__virtuemart_product_categories`.`virtuemart_category_id` = '.$virtuemart_category_id;
+				   $joinCategory = true ;
+				   $catscont = array();
+				   $this->untreeCat($virtuemart_category_id, $catscont);
+				   $qkat = ' `#__virtuemart_product_categories`.`virtuemart_category_id` IN ('.$virtuemart_category_id;
+					foreach ($catscont as &$kat){
+						 $qkat .= ', '.$kat;
+					}
+					$qkat .= ')';
+					$where[] = $qkat;
 		}
-
+	/*if ($virtuemart_category_id>0){
+		$joinCategory = TRUE;
+		$where[] = ' `#__virtuemart_product_categories`.`virtuemart_category_id` = '.$virtuemart_category_id;
+	}*/
 		if ($this->product_parent_id){
 			$where[] = ' p.`product_parent_id` = '.$this->product_parent_id;
 		}
@@ -1598,4 +1623,6 @@ function getProductParent($product_parent_id) {
 }
 
 }
+
+
 // No closing tag
