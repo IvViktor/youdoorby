@@ -785,7 +785,7 @@ function untreeCat($vm_catid, &$ccont){
 
 		$ids = $this->sortSearchListQuery(true, $categoryId);
 		//$ids = [707,709,710];
-		$this->products = $this->getProducts($ids);
+		$this->products = $this->getProducts(array_unique($ids));
 		return $this->products;
 	}
 
