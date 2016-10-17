@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access'); // Запрет прямого д
 jimport('joomla.application.component.view'); // Подключаем библиотеку представления Joomla.
 
 // Расчет товаров на строку
-$BrowseProducts_per_row = 4;
+$BrowseProducts_per_row = 5;
 $Browsecellwidth = ' width' . floor (100 / $BrowseProducts_per_row);
 $iBrowseCol = 1;
 $iBrowseProduct = 1;
@@ -33,7 +33,7 @@ foreach ($product_decode as $product) {
 	} else {
 		$product_calc['calc_value_mathop'] = '0';
 	}
-	$qt2 ='SELECT `product_name` FROM `#__virtuemart_products_ru_ru` LEFT JOIN `#__virtuemart_products` USING (virtuemart_product_id) WHERE `virtuemart_product_id` = '.$product.'';
+	$qt2 ='SELECT `product_name` FROM `#__virtuemart_products_en_gb` LEFT JOIN `#__virtuemart_products` USING (virtuemart_product_id) WHERE `virtuemart_product_id` = '.$product.'';
 	$db->setQuery($qt2); $product_name = $db->loadAssoc();
 	$qt21 ='SELECT b.`currency_symbol` FROM `#__virtuemart_vendors` as a LEFT JOIN `#__virtuemart_currencies` as b ON a.`vendor_currency` = b.`virtuemart_currency_id` WHERE a.`virtuemart_vendor_id` = 1';
 	$db->setQuery($qt21); $price_currency = $db->loadResult();
@@ -41,7 +41,7 @@ foreach ($product_decode as $product) {
 	$db->setQuery($qt3); $category_id = $db->loadResult();
 	$qt4 ='SELECT * FROM `#__virtuemart_product_medias` LEFT JOIN `#__virtuemart_medias` USING (virtuemart_media_id) WHERE `virtuemart_product_id` = '.$product.'';
 	$db->setQuery($qt4); $media = $db->loadAssoc();
-	$qt5 ='SELECT `mf_name` FROM `#__virtuemart_product_manufacturers` LEFT JOIN `#__virtuemart_manufacturers_ru_ru` USING (virtuemart_manufacturer_id) WHERE `virtuemart_product_id` = '.$product.'';
+	$qt5 ='SELECT `mf_name` FROM `#__virtuemart_product_manufacturers` LEFT JOIN `#__virtuemart_manufacturers_en_gb` USING (virtuemart_manufacturer_id) WHERE `virtuemart_product_id` = '.$product.'';
 	$db->setQuery($qt5); $manufacturer = $db->loadAssoc();
 	$knop= '<div class="addtocart-area">
 			<form method="post" class="product" action="index.php">
