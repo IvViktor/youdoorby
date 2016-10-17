@@ -45,6 +45,7 @@ if (Permissions::getInstance()->check("admin,storeadmin")) {
 }
 
 echo $edit_link; */ ?>
+
 <div class="category_description">
 	<?php echo $this->category->category_description ; ?>
 </div>
@@ -125,11 +126,12 @@ if ( VmConfig::get('showCategory',1) ) {
 		<div class="clear"></div>
 		</div>
 	<?php } ?>
-</div>
+	
 
 <?php }
 }
 ?>
+<div class="product-container">
 <div class="browse-view">
     <?php
 if (!empty($this->keyword)) {
@@ -196,12 +198,92 @@ foreach ( $this->products as $product ) {
 	}
 
 		// Show Products ?>
-		<div class="product floatleft<?php echo $Browsecellwidth . $show_vertical_separator ?>">
+		<div class="product floatleft width16">
 			<div class="spacer">
-				<div class="width30 floatleft center">
+			<div class="quick-1">
+							<div class="quick-content-1">
+				<div class="width16 floatleft">
+<div class="quick-row">
+<ul>
+<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}"><i class="fa fa-search fa-3x" aria-hidden="true"></i></a></li>
+<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}">Быстрый просмотр</a></li>
+<li><a class="quick-order-1 show_popup" rel="order" >Заказать в один клик</a></li>
+</ul>
+</div>
+ </div>
 					<?php /** @todo make image popup */
 							echo $product->images[0]->displayMediaThumb('class="browseProductImage" border="0" title="'.$product->product_name.'" ',true,'class="modal"');
 						?>
+
+						
+					<h2><?php echo JHTML::link($product->link, $product->product_name); ?></h2>
+					<div class="product-price marginbottom12" id="productPrice<?php echo $product->virtuemart_product_id ?>">
+					<?php
+					if ($this->show_prices == '1') {
+						if( $product->product_unit && VmConfig::get('vm_price_show_packaging_pricelabel')) {
+							echo "<strong>". JText::_('COM_VIRTUEMART_CART_PRICE_PER_UNIT').' ('.$product->product_unit."):</strong>";
+						}
+						if(empty($product->prices) and VmConfig::get('askprice',1) and empty($product->images[0]->file_is_downloadable) ){
+							echo JText::_('COM_VIRTUEMART_PRODUCT_ASKPRICE');
+						}
+						//todo add config settings
+						if( $this->showBasePrice){
+							echo $this->currency->createPriceDiv('basePrice','COM_VIRTUEMART_PRODUCT_BASEPRICE',$product->prices);
+							echo $this->currency->createPriceDiv('basePriceVariant','COM_VIRTUEMART_PRODUCT_BASEPRICE_VARIANT',$product->prices);
+						}
+						echo $this->currency->createPriceDiv('variantModification','',$product->prices);
+						echo $this->currency->createPriceDiv('basePriceWithTax','',$product->prices);
+						echo $this->currency->createPriceDiv('discountedPriceWithoutTax','',$product->prices);
+						echo $this->currency->createPriceDiv('salesPriceWithDiscount','',$product->prices);
+						echo $this->currency->createPriceDiv('salesPrice','',$product->prices);
+						echo $this->currency->createPriceDiv('priceWithoutTax','',$product->prices);
+						echo $this->currency->createPriceDiv('discountAmount','',$product->prices);
+						echo $this->currency->createPriceDiv('taxAmount','',$product->prices);
+					} ?>
+					</div>
+
+
+		<form method="post" class="product" action="index.php" id="addtocartproduct<?php echo $product->virtuemart_product_id ?>">
+	<div class="addtocart-bar">
+
+			<?php // Display the quantity box ?>
+			<!-- <label for="quantity<?php echo $product->virtuemart_product_id;?>" class="quantity_box"><?php echo JText::_('COM_VIRTUEMART_CART_QUANTITY'); ?>: </label> -->
+			<span class="quantity-box">
+				<input  type="text" class="quantity-input" name="quantity[]" value="1" />
+			</span>
+			<span class="quantity-controls">
+				<input type="button" class="quantity-controls quantity-plus" />
+				<input type="button" class="quantity-controls quantity-minus" />
+			</span>
+			<?php // Display the quantity box END ?>
+
+			<?php // Add the button
+			$button_lbl = JText::_('COM_VIRTUEMART_CART_ADD_TO');
+			$button_cls = ''; //$button_cls = 'addtocart_button';
+			if (VmConfig::get('check_stock') == '1' && !$product->product_in_stock) {
+				$button_lbl = JText::_('COM_VIRTUEMART_CART_NOTIFY');
+				$button_cls = 'notify-button';
+			} ?>
+
+			<?php // Display the add to cart button ?>
+			<span class="addtocart-button">
+				<input type="submit" name="addtocart"  class="addtocart-button" value="<?php echo $button_lbl ?>" title="<?php echo $button_lbl ?>" />
+			</span>
+
+		<div class="clear"></div>
+		</div>
+
+		<?php // Display the add to cart button END ?>
+		<input type="hidden" class="pname" value="<?php echo $product->product_name ?>">
+		<input type="hidden" name="option" value="com_virtuemart" />
+		<input type="hidden" name="view" value="cart" />
+		<noscript><input type="hidden" name="task" value="add" /></noscript>
+		<input type="hidden" name="virtuemart_product_id[]" value="<?php echo $product->virtuemart_product_id ?>" />
+		<?php /** @todo Handle the manufacturer view */ ?>
+		<input type="hidden" name="virtuemart_manufacturer_id" value="<?php echo $product->virtuemart_manufacturer_id ?>" />
+		<input type="hidden" name="virtuemart_category_id[]" value="<?php echo $product->virtuemart_category_id ?>" />
+</form>
+
 
 
 						<!-- The "Average Customer Rating" Part -->
@@ -223,50 +305,7 @@ foreach ( $this->products as $product ) {
 						</div>
 						<?php }?>
 				</div>
-
-				<div class="width70 floatright">
-
-					<h2><?php echo JHTML::link($product->link, $product->product_name); ?></h2>
-
-						<?php // Product Short Description
-						if(!empty($product->product_s_desc)) { ?>
-						<p class="product_s_desc">
-						<?php echo shopFunctionsF::limitStringByWord($product->product_s_desc, 40, '...') ?>
-						</p>
-						<?php } ?>
-
-					<div class="product-price marginbottom12" id="productPrice<?php echo $product->virtuemart_product_id ?>">
-					<?php
-					if ($this->show_prices == '1') {
-						if( $product->product_unit && VmConfig::get('vm_price_show_packaging_pricelabel')) {
-							echo "<strong>". JText::_('COM_VIRTUEMART_CART_PRICE_PER_UNIT').' ('.$product->product_unit."):</strong>";
-						}
-						if(empty($product->prices) and VmConfig::get('askprice',1) and empty($product->images[0]->file_is_downloadable) ){
-							echo JText::_('COM_VIRTUEMART_PRODUCT_ASKPRICE');
-						}
-						//todo add config settings
-						if( $this->showBasePrice){
-							echo $this->currency->createPriceDiv('basePrice','COM_VIRTUEMART_PRODUCT_BASEPRICE',$product->prices);
-							echo $this->currency->createPriceDiv('basePriceVariant','COM_VIRTUEMART_PRODUCT_BASEPRICE_VARIANT',$product->prices);
-						}
-						echo $this->currency->createPriceDiv('variantModification','COM_VIRTUEMART_PRODUCT_VARIANT_MOD',$product->prices);
-						echo $this->currency->createPriceDiv('basePriceWithTax','COM_VIRTUEMART_PRODUCT_BASEPRICE_WITHTAX',$product->prices);
-						echo $this->currency->createPriceDiv('discountedPriceWithoutTax','COM_VIRTUEMART_PRODUCT_DISCOUNTED_PRICE',$product->prices);
-						echo $this->currency->createPriceDiv('salesPriceWithDiscount','COM_VIRTUEMART_PRODUCT_SALESPRICE_WITH_DISCOUNT',$product->prices);
-						echo $this->currency->createPriceDiv('salesPrice','COM_VIRTUEMART_PRODUCT_SALESPRICE',$product->prices);
-						echo $this->currency->createPriceDiv('priceWithoutTax','COM_VIRTUEMART_PRODUCT_SALESPRICE_WITHOUT_TAX',$product->prices);
-						echo $this->currency->createPriceDiv('discountAmount','COM_VIRTUEMART_PRODUCT_DISCOUNT_AMOUNT',$product->prices);
-						echo $this->currency->createPriceDiv('taxAmount','COM_VIRTUEMART_PRODUCT_TAX_AMOUNT',$product->prices);
-					} ?>
-					</div>
-
-					<p>
-					<?php // Product Details Button
-					echo JHTML::link($product->link, JText::_('COM_VIRTUEMART_PRODUCT_DETAILS'), array('title' => $product->product_name,'class' => 'product-details'));
-					?>
-					</p>
-
-				</div>
+</div>
 			<div class="clear"></div>
 			</div><!-- end of spacer -->
 		</div> <!-- end of product -->
@@ -297,3 +336,5 @@ if ($iBrowseCol != 1) { ?>
 <?php } elseif ($this->search !==null ) echo JText::_('COM_VIRTUEMART_NO_RESULT').($this->keyword? ' : ('. $this->keyword. ')' : '')
 ?>
 </div><!-- end browse-view -->
+
+</div>

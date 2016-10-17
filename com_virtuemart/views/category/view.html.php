@@ -136,9 +136,9 @@ class VirtuemartViewCategory extends VmView {
 		$this->assignRef('search', $search);
 
 	    // Load the products in the given category
-		echo "categoryId ->".$categoryId;
+		//echo "categoryId ->".$categoryId;
 	    $products = $productModel->getProductsInCategory($categoryId);
-		echo 'products ->'.count($products);
+		//echo 'products ->'.count($products);
 	    $productModel->addImages($products,1);
 	    $this->assignRef('products', $products);
 
@@ -153,7 +153,7 @@ class VirtuemartViewCategory extends VmView {
 		if (JRequest::getInt('virtuemart_manufacturer_id' ) and !empty($products[0])) $title .=' '.$products[0]->mf_name ;
 		$document->setTitle( $title );
 
-	    $pagination = $productModel->getPagination(0,0,0,$perRow);
+	    $pagination = $productModel->getPagination(0,0,20,$perRow);
 	    $this->assignRef('vmPagination', $pagination);
 
 	    $orderByList = $productModel->getOrderByList($categoryId);
