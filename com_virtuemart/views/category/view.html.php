@@ -60,6 +60,8 @@ class VirtuemartViewCategory extends VmView {
 
 
 		$categoryId = JRequest::getInt('virtuemart_category_id', 1);
+		$limitStart = JRequest::getInt('start',0);
+		$limitNumber = JRequest::getInt('limit',20);
 		$vendorId = 1;
 
 		$category = $categoryModel->getCategory($categoryId);
@@ -153,7 +155,7 @@ class VirtuemartViewCategory extends VmView {
 		if (JRequest::getInt('virtuemart_manufacturer_id' ) and !empty($products[0])) $title .=' '.$products[0]->mf_name ;
 		$document->setTitle( $title );
 
-	    $pagination = $productModel->getPagination(0,0,20,$perRow);
+	    $pagination = $productModel->getPagination(0,$limitStart,$limitNumber,$perRow);
 	    $this->assignRef('vmPagination', $pagination);
 
 	    $orderByList = $productModel->getOrderByList($categoryId);
