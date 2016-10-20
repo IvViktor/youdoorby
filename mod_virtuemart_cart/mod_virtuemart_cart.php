@@ -39,6 +39,8 @@ $lang->load($extension);//  when AJAX it needs to be loaded manually here >> in 
 if ($data->totalProduct>1) $data->totalProductTxt = JText::sprintf('COM_VIRTUEMART_CART_X_PRODUCTS', $data->totalProduct);
 else if ($data->totalProduct == 1) $data->totalProductTxt = JText::_('COM_VIRTUEMART_CART_ONE_PRODUCT');
 else $data->totalProductTxt = JText::_('COM_VIRTUEMART_EMPTY_CART');
+
+
 if (false && $data->dataValidated == true) {
 	$taskRoute = '&task=confirm';
 	$linkName = JText::_('COM_VIRTUEMART_CART_CONFIRM');
@@ -49,7 +51,7 @@ if (false && $data->dataValidated == true) {
 $useSSL = VmConfig::get('useSSL',0);
 $useXHTML = true;
 $data->cart_show = '<a style ="float:right;" href="'.JRoute::_("index.php?option=com_virtuemart&view=cart".$taskRoute,$useXHTML,$useSSL).'">'.$linkName.'</a>';
-$data->billTotal = $lang->_('COM_VIRTUEMART_CART_TOTAL').' : <strong>'. $data->billTotal .'</strong>';
+$data->billTotal = '<p class="bill-total">'.$lang->_('COM_VIRTUEMART_CART_TOTAL').':</p>'.' <p class="bill-total-price">'. $data->billTotal .'</p>';
 
 vmJsApi::jQuery();
 vmJsApi::jPrice();

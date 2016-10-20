@@ -1,7 +1,14 @@
-<div>
-	<a class="showpopup" rel="cart-1" href="#"><i class="fa fa-shopping-cart"></i></a>  
-</div>
-	
+<div class="vmCartModule <?php echo $params->get('moduleclass_sfx'); ?>" id="vmCartModule">
+
+<div class="cart-container">
+	<a class="showpopup" rel="cart-1" href="#">
+		<i class="fa fa-shopping-cart fa-lg"><div class="total_products"><?php echo  $data->totalProductTxt ?></div></i>
+	</a>
+	<div class="total" style="float: right;">
+		<?php if ($data->totalProduct) echo  $data->billTotal; ?>
+	</div>
+</div> 
+
 <div class="popup cart-1">
 	<a class="closing" href="#">Close</a>
 
@@ -14,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 // ALL THE DISPLAY IS Done by Ajax using "hiddencontainer" ?>
 
 <!-- Virtuemart 2 Ajax Card -->
-<div class="vmCartModule <?php echo $params->get('moduleclass_sfx'); ?>" id="vmCartModule">
+
 <?php
 if ($show_product_list) {
 	?>
@@ -32,12 +39,16 @@ if ($show_product_list) {
 	</div>
 	<div class="vm_cart_products">
 		<div class="container">
+		
 		<?php foreach ($data->products as $product)
 		{
 			if ($show_price) { ?>
 				  <div class="prices" style="float: right;"><?php echo  $product['prices'] ?></div>
 				<?php } ?>
 			<div class="product_row">
+				<span class='product_image'>
+					<?php echo $product['product_image']; ?>
+				</span>
 				<span class="quantity"><?php echo  $product['quantity'] ?></span>&nbsp;x&nbsp;<span class="product_name"><?php echo  $product['product_name'] ?></span>
 			</div>
 			<?php if ( !empty($product['product_attributes']) ) { ?>
