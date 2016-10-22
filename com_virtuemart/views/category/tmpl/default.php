@@ -158,16 +158,12 @@ if (!empty($this->products)) {
 	<div class="orderby-displaynumber">
 				<div class="width70 floatleft">
 					<?php echo $this->orderByList['orderby']; ?>
-					<a class="allproduct" href="/catalog">Показать все</a>
 				</div>
-				<div class="width30 floatright display-number">
-				<?php echo $this->vmPagination->getResultsCounter();?><br/>
-				<?php echo $this->vmPagination->getCustomLimitBox(); ?>
-
-				</div>
+				<div class="width30 floatright display-number"><?php echo $this->vmPagination->getResultsCounter();?><br/><?php echo $this->vmPagination->getCustomLimitBox(); ?></div>
 
 
 
+			<a class="allproduct" href="/catalog">Показать все</a>
 			<div class="clear"></div>
 			</div> <!-- end of orderby-displaynumber -->
 <h1><?php echo $this->category->category_name; ?></h1>

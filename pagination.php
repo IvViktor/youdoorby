@@ -475,9 +475,9 @@ class JPagination extends JObject
 				$params .= '&' . $key . '=' . $value;
 			}
 		}
-		$html .= "<a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=') . '&limit=20' . "\" title = \"Выводить по 20\">20</a>";
-		$html .= "<a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=') . '&limit=40' . "\" title = \"Выводить по 40\">40</a>";
-		$html .= "<a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=') . '&limit=100' . "\" title = \"Выводить по 100\">100</a>";
+		$html .= "<a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=&limit=20') . "\" title = \"Выводить по 20\">20</a>";
+		$html .= " <a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=&limit=40') . "\" title = \"Выводить по 40\">40</a>";
+		$html .= " <a href=\"" . JRoute::_($params . '&' . $this->prefix . 'limitstart=&limit=100') . "\" title = \"Выводить по 100\">100</a>";
 		return $html;
 	}
 
