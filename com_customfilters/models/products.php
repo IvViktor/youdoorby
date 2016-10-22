@@ -41,6 +41,22 @@ class CustomfiltersModelProducts extends VirtueMartModelProduct
 	protected $found_product_ids=array();
 	public $vmVersion;
 
+function untreeCat($vm_catid, &$ccont){ 
+		$dbx = JFactory::getDBO(); 
+		$q = 'SELECT `category_child_id` FROM `#__virtuemart_category_categories` WHERE `category_parent_id`="'.$vm_catid.'"';
+		$dbx->setQuery($q);
+		 $dby = $dbx->query();
+		 if ($dby->num_rows > 0) {
+				//return;
+		//} else {
+				while($tt = $dby->fetch_row()) { 
+						array_push($ccont, $tt[0]); 
+						$kat = $tt[0];
+						$this->untreeCat($kat, $ccont);
+				} 
+		} 
+}
+
 	/**
 	 * The class constructor
 	 * @since	1.0
@@ -198,7 +214,16 @@ class CustomfiltersModelProducts extends VirtueMartModelProduct
 				JArrayHelper::toInteger($vm_categories);
 				if(count($vm_categories)>0){
 					$join_prodcat=true;
+				   $this->untreeCat($vm_categories[0], $vm_categories);
 					$where[]=' pc.virtuemart_category_id IN ('.implode(',',$vm_categories).')';
+					//$catscont = array();
+				   /*$qkat = ' `#__virtuemart_product_categories`.`virtuemart_category_id` IN ('.$virtuemart_category_id;
+					foreach ($catscont as &$kat){
+						 $qkat .= ', '.$kat;
+					}
+					$qkat .= ')';
+					$where[] = $qkat;*/
+
 				}
 			}
 		}
