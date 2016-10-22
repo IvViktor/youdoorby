@@ -9,7 +9,13 @@
 	cursor: pointer;
 	font-size: 1.1em;
 	padding-bottom: 3px;
-	font-weight: bold;
+	font-weight: 600;
+	color: #757575;
+	margin: 10px 0 0 0;
+}
+
+#cfhead_price_149 {
+	margin: 10px 0;
 }
 
 .headexpand {
@@ -19,7 +25,11 @@
 	margin-right: 5px;
 }
 
-/*Fonts*/
+#cfhead_custom_f_23_149, #cfhead_custom_f_24_149 {
+display: none;
+}
+
+/*Fonts
 @font-face {
   font-family: 'fontello';
   src: url('font/fontello.eot?51759646');
@@ -29,7 +39,7 @@
        url('font/fontello.svg?51759646#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
-}
+}*/
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
@@ -69,6 +79,7 @@
 
 .headexpand_show {
 	background: url(arrows_exp.png) left bottom no-repeat;
+	display:none;
 }
 
 .headexpand_hide {
@@ -143,8 +154,10 @@
 
 /*2 inputs - range*/
 .cf_wrapper_input_text_2 input[type="search"]{
-	width:25%;
-	min-width:50px;
+	width: 52px;
+	min-width: 50px;
+	height: 21px;
+	font-size: 12px;
 }
 
 .cf_message {
@@ -279,12 +292,11 @@
 /*Sliders*/
 /** To do convert the percentage width to px*/
 .cf_filtering_slider_gutter {
-	float: left;
-	width: 150px;
+	width: auto;
 	display: block;
 	position: relative;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 15px;
+	margin: auto;
 }
 
 .cf_filtering_slider_gutter_item {
@@ -299,7 +311,7 @@
 }
 
 .cf_slider_gutter_m {
-	width: 132px;
+	width: 180px;
 	background: url(slider_rptr.gif) center repeat-x;
 	height: 30px;
 }
@@ -316,35 +328,35 @@
 
 .cf_filtering_knob {
 	position: absolute;
-	height: 30px;
-	width: 20px;
+	height: 26px;
+	width: 22px;
 	cursor: pointer;
 	z-index: 99;
 }
 
 .cf_filtering_knob_from {
 	clear: left;
-	background: url(slider_knob_from.png) center 0px no-repeat;
+	background: url(slider_knob_from.png) center 3px no-repeat;
 }
 
-.cf_filtering_knob_from:hover {
+/*.cf_filtering_knob_from:hover {
 	background-position: center -32px;
-}
+}*/
 
 .cf_filtering_knob_to {
-	background: url(slider_knob_to.png) center -28px no-repeat;
+	background: url(slider_knob_to.png) center -23px no-repeat;
 }
 
-.cf_filtering_knob_to:hover {
+/*.cf_filtering_knob_to:hover {
 	background-position: center 4px;
 }
-
+*/
 /* For Clip */
 .slider_bkg_img {
 	position: absolute;
 	height: 8px;
 	margin: 11px 9px 0px -8px;
-	width: 148px;
+  width: 200px;
 	background: url(bkg_slider.gif) no-repeat;
 }
 
@@ -353,7 +365,7 @@
 	padding-right:10px;
 	min-height:1em;	
 	cursor: pointer;
-	display:inline-block;
+	display: none;
 }
 
 

@@ -99,7 +99,7 @@ var Cfslider = new Class({
 			this.maxPreviousChange = -1;
 			this.maxPreviousEnd = -1;
 			this.maxstep = this.options.end;
-			this.maxknob.setStyle('position', 'relative').setStyle(this.p, + this.max - this.options.offset).setStyle('bottom', this.options.knobheight);
+			this.maxknob.setStyle('position', 'relative').setStyle(this.p, + this.max - this.options.offset).setStyle('bottom', '25px');
 		}
 		var lim = {};
 		//status = this.z

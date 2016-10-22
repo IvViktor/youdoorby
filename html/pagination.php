@@ -82,16 +82,20 @@ function pagination_list_footer($list)
 
     return $html;
 }
-
+//ФУНКЦИЯ В КОТОРОЙ ВЫВОДЯТСЯ ВСЕ ССЫЛКИ В ПАГИНАЦИИ
 function pagination_list_render($list)
 {
     // Initialize variables
     $numlr = 1; //колличество позиций страниц в начале ленты и в конце
     $numpos = 5; //колличество позиций ленты вообще
     $lang =& JFactory::getLanguage();
+
+
+    //===========================ПАГИНАЦИ ОФОРМЛЕНА В ВИДЕ ТАБЛИЦЫ С ОДНОЙ СТРОКОЙ============================================================================
     $html = '<table class="contentpagination"><tr>';
 // Reverse output rendering for right-to-left display
     if($lang->isRTL()){ $list['pages'] = array_reverse( $list['pages'] ); }
+        //===================================ЗДЕСЬ ВЫВОДИТСЯ ССЫЛКА НА КНОПКУ ПРЕДИДУЩИАЯ СТРАНИЦА В ПАГИНАЦИИ
     $html .= '<td align="right" width="49%">';
 //  $html .= '&laquo;';
 //  $html .= '&#38;#171;';
@@ -99,6 +103,7 @@ function pagination_list_render($list)
     $html .= $list['previous']['data'];
     $html .= '</td>';
     $html .= '<td align="center">';
+    //========================================ЗДЕСЬ ВЫВОДЯТСЯ ССЫЛКИ НА СТРАНИЦЫ В ПАГИНАЦИИ
     if(count($list['pages'])>$numpos) { // если страниц больше чем позиций в ленте - разбиваем троеточием
         for($i=1; $i<=count($list['pages']); $i++){
             if(!$list['pages'][$i]['active']) {
@@ -107,12 +112,14 @@ function pagination_list_render($list)
                 }else{
                     for($j=1; $j<$i; $j++){ $html .= $list['pages'][$j]['data']; }
                 }
+            //=================================ЗДЕСЬ ВЫВОДИТСЯ ТРОЕТОЧИЕ
                 if(($numlr+1) < ($i-1)){ $html .= '...'; }
                 if((count($list['pages']) - $numlr) <= $i){
                     for($j=(count($list['pages'])-$numlr-2); $j<$i; $j++){ $html .= $list['pages'][$j]['data']; }
                 }else{
                     if($i > ($numlr+1)){ $html .= $list['pages'][$i-1]['data']; }
                 }
+                //==============================ЗДЕСЬ ВЫВОДИТСЯ ТЕКУЩАЯ КНОПКА В ПАГИНАЦИИ
                 $html .= '<span class="activ">';
                 $html .= $list['pages'][$i]['data'];
                 $html .= '</span>';
@@ -121,6 +128,7 @@ function pagination_list_render($list)
                 }else{
                     if($i < (count($list['pages'])-$numlr)){ $html .= $list['pages'][$i+1]['data']; }
                 }
+                //================================ЗДЕСЬ ВЫВОДИТСЯ ЕЩЕ ОДНО ТРОЕТОЧИЕ
                 if((count($list['pages']) - $numlr) > ($i+1)){ $html .= '...'; }
                 if($i <= (count($list['pages'])-$numlr)){
                     for($j=(count($list['pages'])-$numlr+1); $j<=count($list['pages']); $j++){ $html .= $list['pages'][$j]['data']; }
@@ -141,12 +149,14 @@ function pagination_list_render($list)
         }
     }
     $html .= '</td>';
+    //================================================ЗДЕСЬ ВЫВОДИТСЯ КНОПКА СЛЕДУЮЩАЯ СТРАНИЦА В ПАГИНАЦИИ
     $html .= '<td align="left" width="49%">';
     $html .= $list['next']['data'];
 //  $html .= $list['end']['data'];
 //  $html .= '&raquo;';
     $html .= '</td>';
     $html .= '</tr></table>';
+    //===============================================ЗАКОНЧИЛАСЬ ОТРИСОВКА ТАБЛИЦЫ ПАГИНАЦИИ
     return $html;
 }
 
@@ -155,6 +165,6 @@ function pagination_item_active(&$item) {
 }
 
 function pagination_item_inactive(&$item) {
-    return "&nbsp;<span>".$item->text."</span>&nbsp;";
+    return "&nbsp;<a href=\"".$item->link."\" title=\"".$item->text."\">".$item->text."</a>&nbsp;";
 }
 ?>

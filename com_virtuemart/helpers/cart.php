@@ -1387,6 +1387,7 @@ class VirtueMartCart {
 			// @todo Add variants
 			$this->data->products[$i]['product_name'] = JHTML::link($url, $product->product_name);
 			if($product->image){
+				//$this->data->products[$i]['product_image'] = $product->image->displayMediaThumb('',false);
 				$this->data->products[$i]['product_image'] = JHTML::link($url, $product->image->displayMediaThumb('',false));
 			}
 			// Add the variants

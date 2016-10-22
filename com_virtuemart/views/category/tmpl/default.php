@@ -44,7 +44,18 @@ if (Permissions::getInstance()->check("admin,storeadmin")) {
 		'.JHTML::_('image', 'images/M_images/edit.png', JText::_('COM_VIRTUEMART_PRODUCT_FORM_EDIT_PRODUCT'), array('width' => 16, 'height' => 16, 'border' => 0)).'</a>';
 }
 
-echo $edit_link; */ ?>
+
+
+echo $edit_link; */ 
+
+
+echo '<script type="text/javascript" src="'.$_SERVER['HOST'].'/components/com_vm_favorite/script/jquery-2.0.2.min.js"></script>';
+echo '<script type="text/javascript" src="'.$_SERVER['HOST'].'/components/com_vm_favorite/script/jquery.cookie.js"></script>';
+echo '<link rel="stylesheet" href="'.$_SERVER['HOST'].'/components/com_vm_favorite/css/heart.css" type="text/css">';
+
+?>
+
+
 
 <div class="category_description">
 	<?php echo $this->category->category_description ; ?>
@@ -132,6 +143,7 @@ if ( VmConfig::get('showCategory',1) ) {
 }
 ?>
 <div class="product-container">
+
 <div class="browse-view">
     <?php
 if (!empty($this->keyword)) {
@@ -143,20 +155,21 @@ if (!empty($this->keyword)) {
 <?php // Show child categories
 if (!empty($this->products)) {
 ?>
-			<div class="orderby-displaynumber">
+	<div class="orderby-displaynumber">
 				<div class="width70 floatleft">
-					
-					<?php echo $this->orderByList['manufacturer']; ?>
+					<?php echo $this->orderByList['orderby']; ?>
+					<a class="allproduct" href="/catalog">Показать все</a>
 				</div>
-				<div class="width30 floatright display-number"><?php echo $this->vmPagination->getResultsCounter();?><br/><?php echo $this->vmPagination->getLimitBox(); ?></div>
-				<div id="bottom-pagination">
-					<?php echo $this->vmPagination->getPagesLinks(); ?>
-					<span style="float:right"><?php echo $this->vmPagination->getPagesCounter(); ?></span>
+				<div class="width30 floatright display-number">
+				<?php echo $this->vmPagination->getResultsCounter();?><br/>
+				<?php echo $this->vmPagination->getCustomLimitBox(); ?>
+
 				</div>
+
+
 
 			<div class="clear"></div>
 			</div> <!-- end of orderby-displaynumber -->
-
 <h1><?php echo $this->category->category_name; ?></h1>
 
 <?php
@@ -190,6 +203,7 @@ foreach ( $this->products as $product ) {
 	<div class="row">
 	<?php }
 
+
 	// Show the vertical seperator
 	if ($iBrowseProduct == $BrowseProducts_per_row or $iBrowseProduct % $BrowseProducts_per_row == 0) {
 		$show_vertical_separator = ' ';
@@ -203,14 +217,17 @@ foreach ( $this->products as $product ) {
 			<div class="quick-1">
 							<div class="quick-content-1">
 				<div class="width16 floatleft">
-<div class="quick-row">
-<ul>
-<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}"><i class="fa fa-search fa-3x" aria-hidden="true"></i></a></li>
-<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}">Быстрый просмотр</a></li>
-<li><a class="quick-order-1 show_popup" rel="order" >Заказать в один клик</a></li>
-</ul>
-</div>
- </div>
+					<div class="quick-row">
+					<?php $productId = $product->virtuemart_product_id; // при необходимости поменять на переменную id продукта
+						include ($_SERVER['DOCUMENT_ROOT'].'/components/com_vm_favorite/script/heart.php'); ?>
+						<ul>
+							<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}"><i class="fa fa-search fa-3x" aria-hidden="true"></i></a></li>
+							<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}">Быстрый просмотр</a></li>
+							<li><a class="quick-order-1 show_popup" rel="order" >Заказать в один клик</a></li>
+						</ul>
+					</div>
+				</div>
+
 					<?php /** @todo make image popup */
 							echo $product->images[0]->displayMediaThumb('class="browseProductImage" border="0" title="'.$product->product_name.'" ',true,'class="modal"');
 						?>
@@ -285,7 +302,6 @@ foreach ( $this->products as $product ) {
 </form>
 
 
-
 						<!-- The "Average Customer Rating" Part -->
 						<?php if ($this->showRating) { ?>
 						<span class="contentpagetitle"><?php echo JText::_('COM_VIRTUEMART_CUSTOMER_RATING') ?>:</span>
@@ -306,6 +322,8 @@ foreach ( $this->products as $product ) {
 						<?php }?>
 				</div>
 </div>
+
+
 			<div class="clear"></div>
 			</div><!-- end of spacer -->
 		</div> <!-- end of product -->
@@ -331,10 +349,11 @@ if ($iBrowseCol != 1) { ?>
 }
 ?>
 <!-- /div removed valerie -->
-	<div id="bottom-pagination"><?php echo $this->vmPagination->getPagesLinks(); ?><span style="float:right"><?php echo $this->vmPagination->getPagesCounter(); ?></span></div>
+	<div id="bottom-pagination"><?php echo $this->vmPagination->getPagesLinks(); ?></div>
 <!-- /div removed valerie -->
 <?php } elseif ($this->search !==null ) echo JText::_('COM_VIRTUEMART_NO_RESULT').($this->keyword? ' : ('. $this->keyword. ')' : '')
 ?>
 </div><!-- end browse-view -->
 
 </div>
+

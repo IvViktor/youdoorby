@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" method="upgrade">
+	<name>com_vm_favorite</name>
+	<author>Pavel Kostritcyn</author>
+	<creationDate>September 2013</creationDate>
+	<copyright>(C) 2013 (= ПОЗИТИВ =)</copyright>
+	<license>GNU/GPL http://www.gnu.org/copyleft/gpl.html</license>
+	<authorEmail>admin@p0zitiv.ru</authorEmail> 
+	<authorUrl>p0zitiv.ru</authorUrl>
+	<version>1.1.2</version>
+	<description>COM_VM_FAVORITE_XML_DESCRIPTION</description>
+	
+	<languages folder="language">
+		<language tag="ru-RU">site/ru-RU.com_vm_favorite.ini</language>
+		<language tag="ru-RU">site/ru-RU.com_vm_favorite.sys.ini</language>
+	</languages>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>vm_favorite.php</filename>
+		<filename>controller.php</filename>
+		<folder>models</folder>
+		<folder>views</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>script</folder>
+	</files>
+	
+	<administration>
+		<menu>COM_VM_FAVORITE</menu>
+		<languages folder="language">
+			<language tag="ru-RU">admin/ru-RU.com_vm_favorite.ini</language>
+			<language tag="ru-RU">admin/ru-RU.com_vm_favorite.sys.ini</language>
+		</languages>
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>vm_favorite.php</filename>
+		</files>
+	</administration>
+</extension>
