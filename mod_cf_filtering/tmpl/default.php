@@ -76,7 +76,6 @@ if(count($filters_html_array)>0){
         /*Header*/
         ?>
 		<div class="cf_flt_header" id="cfhead_<?php echo $key?>" role="tab">
-			<div class="headexpand headexpand_<?php echo $state?>"	id="headexpand_<?php echo $key?>"></div>
 				<span class="cf_flt_header_text"><?php echo $filter_headers_array[$key]?></span>
 		</div>		
 		
@@ -92,61 +91,65 @@ if(count($filters_html_array)>0){
 			<?php echo $flt_html?>
 		</div>
 	</div>
+
 	<?php
 	}
 	unset($flt_html);
-	
+
 	//reset all link
 	if(!empty($resetUri)){?>
-	<a class="cf_resetAll_link" rel="nofollow" data-module-id="<?php echo $module->id?>" href="<?php echo JRoute::_($resetUri)?>">
-		<span class="cf_resetAll_label"><?php echo JText::_('MOD_CF_RESET_ALL')?></span>
-	</a>
-	<?php 
-	}?>
+
+		<div class="filter-button-container">
+			<div class="filter-button">
+				
+				<a class="cf_resetAll_link" rel="nofollow" data-module-id="<?php echo $module->id?>" href="<?php echo JRoute::_($resetUri)?>">
+					<span class="cf_resetAll_label"><?php echo JText::_('MOD_CF_RESET_ALL')?></span>
+				</a>
+				<?php 
+				}?>
+								
+					<?php 
+					//if no category filter and category var. It means that we are in a category page and the category id should be kept
+					if(empty($filters_html_array['virtuemart_category_id_'.$module->id]) && !empty($filters_render_array['selected_flt']['virtuemart_category_id'])):
+						foreach($filters_render_array['selected_flt']['virtuemart_category_id'] as $key=>$id){?>
+							<input type="hidden" name="virtuemart_category_id[<?php echo $key?>]" value="<?php echo $id?>"/>
+						<?php 
+						}
+					endif;
 					
-		<?php 
-		//if no category filter and category var. It means that we are in a category page and the category id should be kept
-		if(empty($filters_html_array['virtuemart_category_id_'.$module->id]) && !empty($filters_render_array['selected_flt']['virtuemart_category_id'])):
-			foreach($filters_render_array['selected_flt']['virtuemart_category_id'] as $key=>$id){?>
-				<input type="hidden" name="virtuemart_category_id[<?php echo $key?>]" value="<?php echo $id?>"/>
-			<?php 
-			}
-		endif;
-		
-		//if no manufacturer filter and manufact. var. It means that we are in a manufact page and the manufact id should be kept
-		if(empty($filters_html_array['virtuemart_manufacturer_id_'.$module->id]) && !empty($filters_render_array['selected_flt']['virtuemart_manufacturer_id'])):
-			foreach($filters_render_array['selected_flt']['virtuemart_manufacturer_id'] as $key=>$id){?>
-				<input type="hidden" name="virtuemart_manufacturer_id[<?php echo $key?>]" value="<?php echo $id?>"/>
-			<?php 
-			}
-		endif;		
-				
-		
-		//if the keyword search does not exist we have to add it as hidden, because it may added by the search mod
-		 if(empty($filters_html_array['q_'.$module->id])): 
-		 	$query=!empty($filters_render_array['selected_flt']['q'])?$filters_render_array['selected_flt']['q']:'';?>
-		 	<input name="q" type="hidden" value="<?php echo $query;?>"/>
-		 <?php 
-		 endif;
-		
-		if(!$issef && $results_loading_mode!='ajax'):?> 	
-			<input type="hidden" name="option" value="com_customfilters"/>
-			<input type="hidden" name="view" value="products"/>
-			<?php 		
-			if($Itemid):?><input type="hidden" name="Itemid" value="<?php echo $Itemid?>"/>
-			<?php 
-			endif;
-		endif;
-				
-		//in case of button add some extra vars to the form
-		if($results_trigger=='btn'):?>
-		<br/>	
-		<input type="submit" class="cf_apply_button btn btn-primary"  id="cf_apply_button_<?php echo $module->id?>" value="<?php echo JText::_('MOD_CF_APPLY');?>"/>
-		<?php 
-		endif;
-		?>
-		
-		
+					//if no manufacturer filter and manufact. var. It means that we are in a manufact page and the manufact id should be kept
+					if(empty($filters_html_array['virtuemart_manufacturer_id_'.$module->id]) && !empty($filters_render_array['selected_flt']['virtuemart_manufacturer_id'])):
+						foreach($filters_render_array['selected_flt']['virtuemart_manufacturer_id'] as $key=>$id){?>
+							<input type="hidden" name="virtuemart_manufacturer_id[<?php echo $key?>]" value="<?php echo $id?>"/>
+						<?php 
+						}
+					endif;		
+							
+					
+					//if the keyword search does not exist we have to add it as hidden, because it may added by the search mod
+					 if(empty($filters_html_array['q_'.$module->id])): 
+						$query=!empty($filters_render_array['selected_flt']['q'])?$filters_render_array['selected_flt']['q']:'';?>
+						<input name="q" type="hidden" value="<?php echo $query;?>"/>
+					 <?php 
+					 endif;
+					
+					if(!$issef && $results_loading_mode!='ajax'):?> 	
+						<input type="hidden" name="option" value="com_customfilters"/>
+						<input type="hidden" name="view" value="products"/>
+						<?php 		
+						if($Itemid):?><input type="hidden" name="Itemid" value="<?php echo $Itemid?>"/>
+						<?php 
+						endif;
+					endif;
+							
+					//in case of button add some extra vars to the form
+					if($results_trigger=='btn'):?>
+					<input type="submit" class="cf_apply_button btn btn-primary"  id="cf_apply_button_<?php echo $module->id?>" value="<?php echo JText::_('MOD_CF_APPLY');?>"/>
+					<?php 
+					endif;
+					?>
+			</div>
+		</div>
 </form>
 <?php 
 if($view!='module'){?>
