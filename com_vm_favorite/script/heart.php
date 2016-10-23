@@ -24,11 +24,12 @@ function send<?php echo $productId ?>() {
 			jQuery("#result<?php echo $productId ?>").append(favorite);*/
 			jQuery.cookie('vm_favorites',favorite, {path: "/",domain: "<?php echo $_SERVER['SERVER_NAME'] ?>"});//запись в куки
 			jQuery("#favorite_button<?php echo $productId ?>").toggleClass("deleted");
+			getWishListCount();
 		}
 	});
 }
 </script>
-<form action="" method="post" style="display: inline-block;width: 100%;">
+<form action="" method="post" style="display: inline;width: 100%;">
 	<input type="button" id="favorite_button<?php echo $productId ?>" onclick="send<?php echo $productId ?>();" title="В избранное" class="favorite_button <?php echo $deleted ?>">
 	<input type="hidden" id="product_id<?php echo $productId ?>" value="<?php echo $productId ?>">
 </form>

@@ -118,9 +118,11 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/checkbox.js'); /
 			url: "<?php echo JURI::root() ?>components/com_vm_favorite/script/numberscript.php",
 			data: ( {'cookie' : jQuery.cookie('vm_favorites')}),
 			success: function(number){
-				if(number > 0){
+					let numberTag = '<span class="wishlist-number"></span>';
 					let heartWrapper = document.getElementsByClassName('wishlist-container')[0];
-					heartWrapper.innerHTML += number;
+					heartWrapper.innerHTML += numberTag;
+				if(number > 0){
+					heartWrapper.getElementsByClassName('wishlist-number')[0].innerHTML = number;
 				}
 			}
 		});

@@ -56,7 +56,21 @@ if (empty($this->product)) {
 ?>
 
 <div class="productdetails-view">
+	<?php
+	}
+	unset($flt_html);
 
+	//reset all link
+	if(!empty($resetUri)){?>
+  <script>
+  
+  $(function(){
+	  setTimeout(function(){  
+	  $("#sbox-content iframe").contents().find("body").append("  <style type="text/css"><? include "css/template2.css" ?>");
+	  }, 3000);  
+	  }); 
+  
+  </script>
 <?php $productId = $this->product->virtuemart_product_id; // при необходимости поменять на переменную id продукта
 include ($_SERVER['DOCUMENT_ROOT'].'/components/com_vm_favorite/script/heart.php'); ?>
 
@@ -282,14 +296,6 @@ echo $this->loadTemplate('images');
         </div>
    <?php } // Product Packaging END
     ?>
-
-
-
-
-
-
-
-
 
 		<?php
 		// Availability Image
