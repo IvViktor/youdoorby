@@ -346,7 +346,7 @@ class VmModel extends JModel {
 		$mainframe = JFactory::getApplication();
 		$view = JRequest::getWord('view');
 
-		$limit = $mainframe->getUserStateFromRequest('com_virtuemart.'.$view.'.limit', 'limit',  VmConfig::get('list_limit',10), 'int');
+		$limit = $mainframe->getUserStateFromRequest('com_virtuemart.'.$view.'.limit', 'limit',  VmConfig::get('list_limit',20), 'int');
 		$this->setState('limit', $limit);
 		if(JVM_VERSION === 2) {
 			$limitStart = $mainframe->getUserStateFromRequest('com_virtuemart.'.$view.'.limitstart', 'limitstart',  0, 'int');
@@ -411,9 +411,9 @@ class VmModel extends JModel {
 		}
 
 		if($this->_withCount){
-			$q = 'SELECT SQL_CALC_FOUND_ROWS '.$select.$joinedTables;
+			$q = 'SELECT SQL_CALC_FOUND_ROWS DISTINCT'.$select.$joinedTables;
 		} else {
-			$q = 'SELECT '.$select.$joinedTables;
+			$q = 'SELECT DISTINCT '.$select.$joinedTables;
 		}
 
 		if($this->_noLimit || empty($limit)){
