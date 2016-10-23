@@ -159,7 +159,9 @@ if (!empty($this->products)) {
 				<div class="width70 floatleft">
 					<?php echo $this->orderByList['orderby']; ?>
 				</div>
-				<div class="width30 floatright display-number"><?php echo $this->vmPagination->getResultsCounter();?><br/><?php echo $this->vmPagination->getCustomLimitBox(); ?></div>
+				<div class="width30 floatright display-number">
+				<?php// echo $this->vmPagination->getResultsCounter();?>
+				<?php echo $this->vmPagination->getCustomLimitBox(); ?></div>
 
 
 
@@ -255,7 +257,6 @@ foreach ( $this->products as $product ) {
 					} ?>
 					</div>
 
-
 		<form method="post" class="product" action="index.php" id="addtocartproduct<?php echo $product->virtuemart_product_id ?>">
 	<div class="addtocart-bar">
 
@@ -277,7 +278,7 @@ foreach ( $this->products as $product ) {
 				$button_lbl = JText::_('COM_VIRTUEMART_CART_NOTIFY');
 				$button_cls = 'notify-button';
 			} ?>
-
+	
 			<?php // Display the add to cart button ?>
 			<span class="addtocart-button">
 				<input type="submit" name="addtocart"  class="addtocart-button" value="<?php echo $button_lbl ?>" title="<?php echo $button_lbl ?>" />
@@ -346,10 +347,18 @@ if ($iBrowseCol != 1) { ?>
 ?>
 <!-- /div removed valerie -->
 	<div id="bottom-pagination"><?php echo $this->vmPagination->getPagesLinks(); ?></div>
-<!-- /div removed valerie -->
+
+					<div class="display-number2">
+					<?php // echo $this->vmPagination->getResultsCounter();?>
+					<?php echo $this->vmPagination->getCustomLimitBox(); ?></div>
+
+			<a class="allproduct-2" href="/catalog">Показать все</a>
+
+	<!-- /div removed valerie -->
 <?php } elseif ($this->search !==null ) echo JText::_('COM_VIRTUEMART_NO_RESULT').($this->keyword? ' : ('. $this->keyword. ')' : '')
 ?>
-</div><!-- end browse-view -->
 
+</div><!-- end browse-view -->
+	
 </div>
 
