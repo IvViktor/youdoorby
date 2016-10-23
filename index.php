@@ -58,6 +58,12 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/cart.js'); // п
 $doc = JFactory::getDocument(); // получаем параметры 
 $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js'); // подключаем скрипт меню, в данном случае это вариант 1
 ?>  
+
+<?php
+$doc = JFactory::getDocument(); // получаем параметры 
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/checkbox.js'); // подключаем скрипт меню, в данном случае это вариант 1
+?>  
+
   
 
  
@@ -104,11 +110,25 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js'); // �
   <script type="text/javaScript" src="js/libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>
   <script type="text/javaScript" src="js/jquery-1.7.1.min.js"></script>
   <script type="text/javaScript" src="js/libs/owl-carousel/owl.carousel.min.js"></script>
-
-
+<!-- Подключен скрипт для вывода количества избраных товаров -->
+<script>
+	function getWishListCount(){
+		jQuery.ajax({
+			type: "POST",
+			url: "<?php echo JURI::root() ?>components/com_vm_favorite/script/numberscript.php",
+			data: ( {'cookie' : jQuery.cookie('vm_favorites')}),
+			success: function(number){
+				if(number > 0){
+					let heartWrapper = document.getElementsByClassName('wishlist-container')[0];
+					heartWrapper.innerHTML += number;
+				}
+			}
+		});
+	}	
+</script>
   <jdoc:include type="head" />
 </head>
-<body class="<?php echo $tpl->getBodyClasses(); ?>">
+<body class="<?php echo $tpl->getBodyClasses(); ?>" onload='getWishListCount()'>
 
 
 
@@ -142,10 +162,19 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js'); // �
 		  </div>
 
           <div class="content">
+		<?php if (JRequest::getVar('view') != "frontpage") { ?>
             <jdoc:include type="modules" name="breadcrumbs" />
+		<?php } ?>
+		<?php $view = JRequest::getVar('view', null); if ($view !== "checkout.index" && $view !== "cart" && $view!== "shop.cart" && $view!== "account.order_details" && $view !== "checkout.thankyou"){?>
+		    <jdoc:include type="modules" name="sidebar" />
+		<?php } ?>
+		<?php $view = JRequest::getVar('view', null); if ($view !== "productdetails" && $view !== "checkout.index" && $view !== "cart" && $view!== "shop.cart" && $view!== "account.order_details" && $view !== "checkout.thankyou"){?>
 			<jdoc:include type="modules" name="filterpanel"/>
-            <div class="component"><jdoc:include type="component" /></div> <!-- Контент-->
-            <jdoc:include type="modules" name="sidebar" />
+		<?php } ?>
+			
+            <div class="component">
+
+			<jdoc:include type="component" /></div> <!-- Контент-->
             <div class="buttons"><jdoc:include type="modules" name="buttons" /></div>
             <jdoc:include type="modules" name="slider" />
             <div class="sliderm"><jdoc:include type="modules" name="sliderm" /></div> 
