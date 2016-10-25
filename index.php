@@ -61,7 +61,7 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js'); // �
 
 <?php
 $doc = JFactory::getDocument(); // получаем параметры 
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/checkbox.js'); // подключаем скрипт меню, в данном случае это вариант 1
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // подключаем скрипт меню, в данном случае это вариант 1
 ?>  
 
   
@@ -120,10 +120,13 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/checkbox.js'); /
 			success: function(number){
 					let numberTag = '<span class="wishlist-number"></span>';
 					let heartWrapper = document.getElementsByClassName('wishlist-container')[0];
-					heartWrapper.innerHTML += numberTag;
-				if(number > 0){
-					heartWrapper.getElementsByClassName('wishlist-number')[0].innerHTML = number;
-				}
+					let numberTags = heartWrapper.getElementsByClassName('wishlist-number');
+					if(numberTags.length === 0){
+						heartWrapper.innerHTML += numberTag;
+					}
+					if(number > 0){
+						heartWrapper.getElementsByClassName('wishlist-number')[0].innerHTML = number;
+					}
 			}
 		});
 	}	
