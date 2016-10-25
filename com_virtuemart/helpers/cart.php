@@ -1417,6 +1417,9 @@ class VirtueMartCart {
 			// UPDATE CART / DELETE FROM CART
 			$this->data->products[$i]['quantity'] = $product->quantity;
 			$this->data->totalProduct += $product->quantity ;
+			if($this->cart){
+				$this->data->products[$i]['cart_item_id'] = $this->cart->products[$i]->cart_item_id ;
+			}
 
 			$i++;
 		}
