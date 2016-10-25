@@ -39,7 +39,7 @@
 		$i=1;
 		foreach( $this->cart->products as $pkey =>$prow ) { ?>
 			<tr valign="top" class="sectiontableentry<?php echo $i ?>">
-				<td align="center" >
+				<td class="cart-td-1" align="center" >
 					<?php if ( $prow->virtuemart_media_id) {  ?>
 						<span class="cart-images">
 						 <?php
@@ -49,29 +49,29 @@
 					<?php } ?>
 
 				</td>
-				<td align="center">
+				<td class="cart-td-2" align="center">
 					<span>
 					<?php echo JHTML::link($prow->url, $prow->product_name).$prow->customfields; ?>
 					</span>
 				</td>
-				<td align="center" >
+				<td class="cart-td-3" align="center" >
 					<a align="middle"
 						 href="<?php echo JRoute::_('index.php?option=com_virtuemart&view=cart&task=delete&cart_virtuemart_product_id='.$prow->cart_item_id  ) ?>">
-					Delete
+					Удалить
 					</a>
 			</td>
-				<td align="right" ><form action="index.php" method="post" class="inline">
+				<td class="cart-td-4" align="right" ><form action="index.php" method="post" class="inline">
 				<input type="hidden" name="option" value="com_virtuemart" />
 				<input type="text" class="inputbox" size="2" maxlength="4" name="quantity" value="<?php echo $prow->quantity ?>" />
 				<input type="hidden" name="view" value="cart" />
 				<input type="hidden" name="task" value="update" />
 				<input type="hidden" name="cart_virtuemart_product_id" value="<?php echo $prow->cart_item_id  ?>" />
-				<input type="button" name="addnumber" value="+" onclick='addOneToValue(this)'/>
-				<input type="button" name="decnumber" value="-" onclick='decOneFromValue(this)'/>
+				<input type="button" class="add-number" name="addnumber" value="+" onclick='addOneToValue(this)'/>
+				<input type="button" class="dec-number" name="decnumber" value="-" onclick='decOneFromValue(this)'/>
 				  </form>
 			  	</td>
 
-				<td align="right">
+				<td class="cart-td-5" align="right">
 					<?php
 					if (VmConfig::get('checkout_show_origprice',1) && !empty($this->cart->pricesUnformatted[$pkey]['basePriceWithTax']) && $prow->basePriceWithTax != $prow->salesPrice ) {
 						echo '<span class="line-through">'.$prow->basePriceWithTax .'</span><br />' ;
