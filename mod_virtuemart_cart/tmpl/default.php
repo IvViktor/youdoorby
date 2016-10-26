@@ -1,15 +1,20 @@
 <script>
 	function removeProductFromCart(cartItemId){
+			let domain = '';
+			if(document.domain.indexOf('www') === -1) domain = 'http://youdoor.by';
+			else domain = 'http://www.youdoor.by';
+			let address = domain+'/catalog/cart/delete?cart_virtuemart_product_id='+cartItemId;
 			jQuery.ajax({
 				method: 'GET',
-				url: 'http://youdoor.by/index.php?option=com_virtuemart&view=cart&task=delete&cart_virtuemart_product_id='+cartItemId,
+			url: address ,
 				success: function(data){
-						let container = document.getElementsByClassName('vm_cart_products')[0]
-								.getElementsByClassName('container')[0];
+						//console.log('deletion success');
+						let container = document.getElementsByClassName('vm_cart_products')[0].getElementsByClassName('container')[0];
+						//console.log('container selected');
 						let deletedItems = container.getElementsByClassName(cartItemId);
-						deletedItems.forEach((child) => {
-							container.removeChild(child);
-						});
+						for(let i = 0; i < deletedItems.length; i++){
+								deletedItems[i].remove();
+						}
 				}
 			});
 	}
@@ -57,25 +62,27 @@ if ($show_product_list) {
 		<div class="container">
 		
 		<?php foreach ($data->products as $product)
-		{
-			if ($show_price) { ?>
-				  <div class="prices <?php echo $product['cart_item_id'] ?>" style="float: right;"><?php echo  $product['prices'] ?></div>
+		{ ?>
+			<div class="<?php echo $product['cart_item_id'] ?>">
+			<?php	if ($show_price) { ?>
+				  <div class="prices " style="float: right;"><?php echo  $product['prices'] ?></div>
 				<?php } ?>
-			<div class="product_row <?php echo $product['cart_item_id'] ?>">
+			<div class="product_row">
 				<span class='product_image'>
 					<?php echo $product['product_image']; ?>
 				</span>
 				<span class="quantity"><?php echo  $product['quantity'] ?></span>&nbsp;x&nbsp;<span class="product_name"><?php echo  $product['product_name'] ?></span>
 				<span >
-					<a class='popup-cart-delete-button'
-				 onclick='removeProductFromCart(<?php echo $product["cart_item_id"]?>);'>Delete</a>
+					<button type='button' class='popup-cart-delete-button'
+				 onclick='removeProductFromCart(<?php echo $product['cart_item_id'];?>);'>Delete</button>
 				</span>
 			</div>
 			<?php if ( !empty($product['product_attributes']) ) { ?>
-				<div class="product_attributes <?php echo $product['cart_item_id'] ?>"><?php echo  $product['product_attributes'] ?></div>
+				<div class="product_attributes"><?php echo  $product['product_attributes'] ?></div>
 
+			<?php } ?>
+		</div>
 			<?php }
-		}
 		?>
 		</div>
 	</div>

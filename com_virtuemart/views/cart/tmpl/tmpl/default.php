@@ -177,7 +177,9 @@ function confirmOrder(){
 		});
 	}
 }
-
+document.onload = function(){
+	document.getElementById('confirmOrderButton').addEventListener('click',confirmOrder());
+}
 </script>
 <div class="cart-filter">
 <div class="cart-view">
