@@ -209,8 +209,7 @@ let discountSumm = '<?php echo $this->cart->prices['discountAmount'] ?>';
 let shippingSumm = '<?php echo $this->cart->prices['salesPriceShipment'] ?>';
 <?php
 	foreach( $this->cart->products as $pkey =>$prow ) { 
-		$productStr = $prow->product_name;
-		$productStr .= " ( Артикул: ".$prow->product_sku ."; комплектов: " .$prow->quantity ."; цена комплекта: " .$prow->salesPrice .");";
+		$productStr = $prow->product_name . " ( Артикул: ".$prow->product_sku ."; комплектов: " .$prow->quantity ."; цена комплекта: " .$prow->salesPrice .");";
 ?>
 	purshases.push('<?php echo $productStr ?>');
 <?php } ?>
@@ -244,18 +243,15 @@ let confirmOrder = function(){
 };
 
 function getCustomerName(){
-	let name = document.getElementById('customerName').value;
-	return name;
+	return document.getElementById('customerName').value;
 };
 
 function getCustomerEmail(){
-	let email = document.getElementById('customerEmail').value;
-	return email;	
+	return document.getElementById('customerEmail').value;
 };
 
 function getCustomerPhone(){
-	let number = document.getElementById('customerPhoneNumber').value;
-	return number;
+	return document.getElementById('customerPhoneNumber').value;
 };
 
 function getCustomerShipping(){
@@ -298,8 +294,7 @@ function getHeaderText(){
 
 function validateCustomerData(){
 		if(purshases.length === 0) return false;
-		if (validateName() && validateEmail() && validatePhone() && validatePayment() && validateShippment()) return true;
-		return false;
+		return (validateName() && validateEmail() && validatePhone() && validatePayment() && validateShippment());
 };
 
 function validateName(){
