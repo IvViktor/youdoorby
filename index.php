@@ -124,7 +124,7 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
 					if(numberTags.length === 0){
 						heartWrapper.innerHTML += numberTag;
 					}
-					if(+number > 0){
+					if(+number != 0){
 						heartWrapper.getElementsByClassName('wishlist-number')[0].innerHTML = number;
 					}
 			}
