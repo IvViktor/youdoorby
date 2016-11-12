@@ -21,51 +21,18 @@ require dirname(__FILE__) . '/php/init.php';
 <head>
 
 <?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/menu.css'); // подключаем файл стилей
-$doc->addScript('http://code.jquery.com/jquery-latest.min.js'); //подключаем последнюю версию библиотеки jQuery 
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.js'); // подключаем скрипт меню, в данном случае это вариант 1
+$doc = JFactory::getDocument();
+$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/menu.css'); 
+$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/libs/fancybox/jquery.fancybox.css');
+$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/tcal.css');
+$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/style.css');
+$doc->addScript('http://code.jquery.com/jquery-latest.min.js'); 
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/menu-collapsed.js');
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js');
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/libs/fancybox/jquery.fancybox.js'); 
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/libs/jquery/jquery-1.11.1.min.js');
+$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/my_scripts.js');
 ?>  
- 
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/libs/fancybox/jquery.fancybox.css'); // подключаем файл стилей
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/libs/fancybox/jquery.fancybox.pack.js'); // подключаем скрипт меню, в данном случае это вариант 1
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/libs/fancybox/jquery.fancybox.js'); // подключаем скрипт меню, в данном случае это вариант 1
-?>  
- 
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/tcal.css'); // подключаем файл стилей
-?>  
-
-
-
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/libs/jquery/jquery-1.11.1.min.js'); // подключаем скрипт меню, в данном случае это вариант 1
-?>  
-
-
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addStyleSheet(JUri::base().'/templates/'.$this->template.'/css/style.css'); // подключаем файл стилей
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/my_scripts.js'); // подключаем скрипт меню, в данном случае это вариант 1
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/cart.js'); // подключаем скрипт меню, в данном случае это вариант 1
-?>  
-
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/popup.js'); // подключаем скрипт меню, в данном случае это вариант 1
-?>  
-
-<?php
-$doc = JFactory::getDocument(); // получаем параметры 
-$doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // подключаем скрипт меню, в данном случае это вариант 1
-?>  
-
-  
-
  
   <style type="text/css">
     <? include "css/template.css" ?>
@@ -109,7 +76,6 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
   <script type="text/javaScript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
   <script type="text/javaScript" src="js/libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>
   <script type="text/javaScript" src="js/jquery-1.7.1.min.js"></script>
-  <script type="text/javaScript" src="js/libs/owl-carousel/owl.carousel.min.js"></script>
 <!-- Подключен скрипт для вывода количества избраных товаров -->
 <script>
 	function getWishListCount(){
@@ -122,10 +88,10 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
 					let heartWrapper = document.getElementsByClassName('wishlist-container')[0];
 					let numberTags = heartWrapper.getElementsByClassName('wishlist-number');
 					if(numberTags.length === 0){
-						heartWrapper.innerHTML += numberTag;
+					      heartWrapper.innerHTML += numberTag;
 					}
-					if(+number != 0){
-						heartWrapper.getElementsByClassName('wishlist-number')[0].innerHTML = number;
+					if(+number !== 0){
+						numberTags[0].innerHTML = number;
 					}
 			}
 		});
@@ -173,6 +139,7 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
 		<?php $view = JRequest::getVar('view', null); if ($view !== "checkout.index" && $view !== "cart" && $view!== "shop.cart" && $view!== "account.order_details" && $view !== "checkout.thankyou"){?>
 		    <jdoc:include type="modules" name="sidebar" />
 		<?php } ?>
+			<jdoc:include type="modules" name="sales"/>
 		<?php $view = JRequest::getVar('view', null); if ($view !== "productdetails" && $view !== "checkout.index" && $view !== "cart" && $view!== "shop.cart" && $view!== "account.order_details" && $view !== "checkout.thankyou"){?>
 			<jdoc:include type="modules" name="filterpanel"/>
 		<?php } ?>
@@ -184,6 +151,14 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
             <jdoc:include type="modules" name="slider" />
             <div class="sliderm"><jdoc:include type="modules" name="sliderm" /></div> 
             <div class="showcase"><jdoc:include type="modules" name="showcase" /></div>
+            <?php
+			$view = JRequest::getVar('view', null);
+$vmCatId = JRequest::getVar('virtuemart_category_id', null);
+ 
+if (($view == "productdetails") and ($vmCatId == "18") ){?>
+			<div class="showcase1"><jdoc:include type="modules" name="showcase1" /></div>
+			<?php } ?>
+			
            <div class="recommended"> <jdoc:include type="modules" name="recommended" /></div>
            <div class="last"><jdoc:include type="modules" name="last" /></div> 
             <jdoc:include type="modules" name="text" />
@@ -196,7 +171,7 @@ $doc->addScript(JUri::base().'/templates/'.$this->template.'/js/href.js'); // п
 	  
           <div class="footer">
             <jdoc:include type="modules" name="post_component" />
-            <div class="gallery"><jdoc:include type="modules" name="gallery" /></div>
+            <div class="gallery"><jdoc:include type="modules" name="gallery" /></div> 
             <jdoc:include type="modules" name="footer" />
             <jdoc:include type="modules" name="footer-back" />
       </div>
