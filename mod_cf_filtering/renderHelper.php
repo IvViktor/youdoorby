@@ -485,7 +485,7 @@ class ModCfilteringRender
 
 
 						if(!$sliderExist && $value_found){//generate the clear link
-							$innerHTML_clear='<br/>'.JHtml::link($clear_targ,JText::_('MOD_CF_CLEAR'),$linkAttributes);
+							//$innerHTML_clear='<br/>'.JHtml::link($clear_targ,JText::_('MOD_CF_CLEAR'),$linkAttributes);
 						}
 
 						if($innerHTML){
@@ -498,7 +498,7 @@ class ModCfilteringRender
 							<button type="submit" class="cf_search_button btn" id="'.$display_key.'_button'.'">
 							<i class="cficon-search"></i>
 							</button>';
-							$html.=$innerHTML_clear;
+							//$html.=$innerHTML_clear;
 							//assigne event to the button
 							$this->scriptProcesses[]="customFilters.assignEvents(".$this->module->id.");";
 
@@ -608,7 +608,7 @@ class ModCfilteringRender
 						}
 
 						if(($val_from || $val_to)){//generate the clear link
-							$innerHTML_clear='<br/><div style="clear:both">'.JHtml::link($clear_targ,JText::_('MOD_CF_CLEAR'),$linkAttributes).'</div>';
+							//$innerHTML_clear='<br/><div style="clear:both">'.JHtml::link($clear_targ,JText::_('MOD_CF_CLEAR'),$linkAttributes).'</div>';
 						}
 
 						if(!empty($knobInnerHTML)){
