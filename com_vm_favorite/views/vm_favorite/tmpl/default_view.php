@@ -22,7 +22,14 @@ $verticalseparator = " vertical-separator"; // Разделитель
 $cookiename = 'vm_favorites';
 $kuk = $_COOKIE[$cookiename];
 $product_decode = unserialize(stripcslashes($kuk));
+$prodPerPage = JRequest::getInt('limit',20);
+$pageNumber = JRequest::getInt('start',0);
 $total_product = count($product_decode);
+if($prodPerPage > 0){
+	$product_decode = array_slice($product_decode,$pageNumber,$prodPerPage);
+} else {
+	$product_decode = array_slice($product_decode,$pageNumber);
+}
 foreach ($product_decode as $product) {
 	$db = JFactory::getDBO();
 	$qt ='SELECT `product_discount_id`,`product_price` FROM `#__virtuemart_product_prices` WHERE `virtuemart_product_id`='.$product.'';
@@ -50,7 +57,7 @@ foreach ($product_decode as $product) {
 				<input type="button" class="quantity-controls quantity-plus">
 				<input type="button" class="quantity-controls quantity-minus">
 				</span>
-				<span class="addtocart-button" style="width: auto; float: right;"><input type="submit" name="addtocart" class="addtocart-button" value="в корзину" title="в корзину"></span>
+				<span class="addtocart-button"><input type="submit" name="addtocart" class="addtocart-button" value="в корзину" title="в корзину"></span>
 				<div class="clear"></div>
 				<input type="hidden" class="pname" value="'.$product_name['product_name'].'">
 				<input type="hidden" name="option" value="com_virtuemart">
@@ -84,55 +91,68 @@ foreach ($product_decode as $product) {
 	$link = 'index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id='.$product.'&virtuemart_category_id='.$category_id['virtuemart_category_id'];
 	// Товар
 	?>
-	<div class="product floatleft<?php echo $show_vertical_separator ?>">
+	<div class="product wish-list floatleft<?php echo $show_vertical_separator ?>">
 		<div class="spacer">
-			<div class="bp">
-				<?php $productId = $product; // $product поменять на переменную id продукта. Например для шаблона категории это $product->virtuemart_product_id, а для карточки товара это $this->product->virtuemart_product_id
-				?>
-				<script>
-				function send<?php echo $productId ?>() {
-					var product_id = jQuery('#product_id<?php echo $productId ?>').val()
-					jQuery.ajax({
-						type: "POST",
-						url: "<?php echo JURI::root() ?>components/com_vm_favorite/script/script.php",
-						data:  ( {'product_id' : product_id, 'cookie' : jQuery.cookie('vm_favorites')} ),
-						success: function(favorite) {
-							/*jQuery("#result<?php echo $productId ?>").empty(); // Для отладки работы скрипта
-							jQuery("#result<?php echo $productId ?>").append(favorite);*/
-							jQuery.cookie('vm_favorites',favorite, {path: "/",domain: "<?php echo $_SERVER['SERVER_NAME'] ?>"});//запись в куки
-							jQuery("#favorite_button<?php echo $productId ?>").toggleClass("deleted");
+			<div class="quick-1">
+				<div class="quick-content-1">
+					<div class="quick-row">
+						<ul>
+							<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}"><i class="fa fa-search fa-3x" aria-hidden="true"></i></a></li>
+							<li><a class="modal" href="<?php echo $product->link; ?>?tmpl=component" rel="{handler: 'iframe', size: {x: 700, y: 480}}">Быстрый просмотр</a></li>
+							<li><a class="quick-order-1 show_popup" rel="order" >Заказать в один клик</a></li>
+						</ul>
+					</div>
+					<div class="bp">
+						<?php $productId = $product; // $product поменять на переменную id продукта. Например для шаблона категории это $product->virtuemart_product_id, а для карточки товара это $this->product->virtuemart_product_id
+						?>
+						<script>
+						function send<?php echo $productId ?>() {
+							var product_id = jQuery('#product_id<?php echo $productId ?>').val()
+							jQuery.ajax({
+								type: "POST",
+								url: "<?php echo JURI::root() ?>components/com_vm_favorite/script/script.php",
+								data:  ( {'product_id' : product_id, 'cookie' : jQuery.cookie('vm_favorites')} ),
+								success: function(favorite) {
+									/*jQuery("#result<?php echo $productId ?>").empty(); // Для отладки работы скрипта
+									jQuery("#result<?php echo $productId ?>").append(favorite);*/
+									jQuery.cookie('vm_favorites',favorite, {path: "/",domain: "<?php echo $_SERVER['SERVER_NAME'] ?>"});//запись в куки
+									jQuery("#favorite_button<?php echo $productId ?>").toggleClass("deleted");
+								}
+							});
 						}
-					});
-				}
-				</script>
-				<form action="" method="post" style="display: inline-block;width: 100%;">
-					<input type="button" id="favorite_button<?php echo $productId ?>" onclick="send<?php echo $productId ?>();" title="Избранное" class="favorite_button">
-					<input type="hidden" id="product_id<?php echo $productId ?>" value="<?php echo $productId ?>">
-				</form>
-				<!--Для отладки работы скрипта-->
-				<!--<div id="result<?php echo $productId ?>"></div>-->
-				<?php //echo'<pre>'; print_r($media); echo'</pre>'; ?>
-				<img src="<?php if ($media['file_url'] != '') echo $media['file_url']; else echo '/components/com_virtuemart/assets/images/vmgeneral/noimage.gif'; ?>" alt="<?php echo $media['file_title'] ?>" class="browseproductImage" style="max-width: 138px; max-height: 127px;"/>
-			</div>
-			<a href="<?php echo $link; ?>"><?php echo $product_name['product_name'] ?></a>
-			<div class="product-price marginbottom12" id="productPrice<?php echo $product ?>">
-				<?php 
-				if($product_calc['calc_value_mathop']=='-%'){
-					$priceSales = $product_price['product_price'] - ($product_price['product_price'] * $product_calc['calc_value']  / 100);
-				}elseif($product_calc['calc_value_mathop']=='+%'){
-					$priceSales = $product_price['product_price'] + ($product_price['product_price'] * $product_calc['calc_value']  / 100);
-				}elseif($product_calc['calc_value_mathop']=='-'){
-					$priceSales = $product_price['product_price'] - $product_calc['calc_value'];
-				}elseif($product_calc['calc_value_mathop']=='+'){
-					$priceSales = $product_price['product_price'] + $product_calc['calc_value'];
-				}else {$priceSales = $product_price['product_price'];
-				};
-				if($product_price['product_price'] == $priceSales) $priceBase=''; else $priceBase=round($product_price['product_price']).' '.$price_currency;
-				?>
-				<div class="PricebasePrice" style="display : block;"><span class="PricebasePrice"><?php echo $priceBase ?></span></div>
-				<div class="PricesalesPrice" style="display : block;"><span class="PricesalesPrice"><?php echo round($priceSales).' '.$price_currency; ?></span></div>
-			</div>
-			<div class="clear"></div>
+						</script>
+						<form action="" method="post" style="display: inline-block;width: 100%;">
+							<input type="button" id="favorite_button<?php echo $productId ?>" onclick="send<?php echo $productId ?>();" title="Избранное" class="favorite_button">
+							<input type="hidden" id="product_id<?php echo $productId ?>" value="<?php echo $productId ?>">
+						</form>
+						<!--Для отладки работы скрипта-->
+						<!--<div id="result<?php echo $productId ?>"></div>-->
+						<?php //echo'<pre>'; print_r($media); echo'</pre>'; ?>
+						<img src="<?php if ($media['file_url'] != '') echo $media['file_url']; else echo '/components/com_virtuemart/assets/images/vmgeneral/noimage.gif'; ?>" alt="<?php echo $media['file_title'] ?>" class="browseproductImage"/>
+					</div>
+					<a class="wish-link" href="<?php echo $link; ?>"><?php echo $product_name['product_name'] ?></a>
+					<div class="product-price marginbottom12" id="productPrice<?php echo $product ?>">
+						<?php 
+						if($product_calc['calc_value_mathop']=='-%'){
+							$priceSales = $product_price['product_price'] - ($product_price['product_price'] * $product_calc['calc_value']  / 100);
+						}elseif($product_calc['calc_value_mathop']=='+%'){
+							$priceSales = $product_price['product_price'] + ($product_price['product_price'] * $product_calc['calc_value']  / 100);
+						}elseif($product_calc['calc_value_mathop']=='-'){
+							$priceSales = $product_price['product_price'] - $product_calc['calc_value'];
+						}elseif($product_calc['calc_value_mathop']=='+'){
+							$priceSales = $product_price['product_price'] + $product_calc['calc_value'];
+						}else {$priceSales = $product_price['product_price'];
+						};
+						if($product_price['product_price'] == $priceSales) $priceBase=''; else $priceBase=round($product_price['product_price']).' '.$price_currency;
+						?>
+						<div class="PricesalesPrice" style="display : block;"><span class="PricesalesPrice"><?php echo round($priceSales).' '.$price_currency; ?></span></div>
+					</div>
+
+					<?php echo $knop ?>	
+			
+					<div class="clear"></div>
+				</div><!-- end of spacer -->
+			</div> <!-- end of product -->
 		</div><!-- end of spacer -->
 	</div> <!-- end of product -->
 	<?php
